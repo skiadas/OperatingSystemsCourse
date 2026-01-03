@@ -235,7 +235,7 @@
       </match>
       <match order="2">
         <premise>Running to Ready</premise>
-        <response>Possible by OS scheduling</response>
+        <response>Possible by OS interrupt</response>
       </match>
       <match order="3">
         <premise>Running to Blocked</premise>
