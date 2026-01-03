@@ -546,4 +546,5 @@
       <p>You will need to extend the array used to provide arguments to the new program, as the call described above needs three different entries in the command line.</p>
     </hint>
   </exercise>
+  <p>Read through sections 5.4 and 5.5 to get further understanding of how these tools are used, and in particular how the system manages multiple users and what they each can do.</p>
 </section>
