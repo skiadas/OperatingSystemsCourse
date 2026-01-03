@@ -1,0 +1,69 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<section xml:id="sec-objectives" xmlns:xi="http://www.w3.org/2001/XInclude">
+  <title>Course objectives</title>
+  <p>By the end of this course, a student should be able to:
+    <dl>
+      <li>
+        <title>P1: Processes</title>
+        <p>
+          Explain the mechanisms that an operating system utilizes to allow multiple processes to be run on a limited number of CPUs
+        </p>
+      </li>
+      <li>
+        <title>P2: Scheduling</title>
+        <p>
+          Describe and contrast the policies that the operating system might employ for scheduling processes to run
+        </p>
+      </li>
+      <li>
+        <title>M1: Virtual Memory</title>
+        <p>
+          Explain the mechanisms employed by the operating system in order to virtualize the physical memory so that processes don't need to know anything about the physical layout of their memory.
+        </p>
+      </li>
+      <li>
+        <title>M2: Page swapping</title>
+        <p>
+          Explain the mechanisms and policies involved in using persistent storage to provide the illusion that there is more available memory than there actually is.
+        </p>
+      </li>
+      <li>
+        <title>C1: Threads</title>
+        <p>
+          Describe how threads allow a process to have multiple threads of computation concurrently, and the challenges that this brings up.
+        </p>
+      </li>
+      <li>
+        <title>C2: Concurrency primitives</title>
+        <p>
+          Describe the core mechanisms used for implementing concurrency (locks, condition variables, semaphores).
+        </p>
+      </li>
+      <li>
+        <title>P1: Files</title>
+        <p>
+          Describe the main mechanisms and policies involved in the file abstraction and persisting information to a persistent storage medium.
+        </p>
+      </li>
+      <li>
+        <title>P2: Journaling</title>
+        <p>
+          Describe the journaling and log-based system mechanisms that ensure a file system can recover from something like a power outage.
+        </p>
+      </li>
+      <li>
+        <title>I1: Code comprehension</title>
+        <p>
+          Examine the code of a small operating system, and identify how the various OS concepts are implemented.
+        </p>
+      </li>
+      <li>
+        <title>I2: Code modification</title>
+        <p>
+          Make suitable modifications to the small OS code in order to implement new features.
+        </p>
+      </li>
+    </dl>
+  </p>
+  </section>

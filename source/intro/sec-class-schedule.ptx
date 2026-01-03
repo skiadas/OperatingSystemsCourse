@@ -1,0 +1,102 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<section xml:id="sec-class-schedule" xmlns:xi="http://www.w3.org/2001/XInclude">
+  <title>Class Schedule</title>
+
+  <table>
+    <title>Overall class schedule</title>
+    <tabular>
+      <col halign="center" />
+      <col halign="center" />
+      <col halign="left" />
+      <col halign="left" />
+      <row header="yes">
+        <cell>Week no</cell>
+        <cell>Dates</cell>
+        <cell halign="center">Sections</cell>
+        <cell halign="center">Projects</cell>
+      </row>
+      <row>
+        <cell header="yes">1</cell>
+        <cell>1/5-1/9</cell>
+        <cell>Processes</cell>
+        <cell>Intro to xv6</cell>
+      </row>
+      <row>
+        <cell header="yes">2</cell>
+        <cell>1/12-1/16</cell>
+        <cell>CPU Scheduling</cell>
+        <cell>Lottery scheduling</cell>
+      </row>
+      <row>
+        <cell header="yes">3</cell>
+        <cell>1/19-1/23</cell>
+        <cell>Memory, Address translation</cell>
+        <cell>Virtual Memory</cell>
+      </row>
+      <row>
+        <cell header="yes">4</cell>
+        <cell>1/26-1/30</cell>
+        <cell>Segmentation, Free space management</cell>
+        <cell>Improving the allocator</cell>
+      </row>
+      <row>
+        <cell header="yes">5</cell>
+        <cell>2/2-2/6</cell>
+        <cell>Paging, Translation Lookahead Buffers</cell>
+        <cell>Exam 1</cell>
+      </row>
+      <row>
+        <cell header="yes">6</cell>
+        <cell>2/9-2/13</cell>
+        <cell>Page Swapping</cell>
+        <cell>Implementing page swapping</cell>
+      </row>
+      <row>
+        <cell header="yes">7</cell>
+        <cell>2/16-2/20</cell>
+        <cell>Concurrency, Threads</cell>
+        <cell>Catchup</cell>
+      </row>
+      <row>
+        <cell colspan="4">WINTER BREAK</cell>
+      </row>
+      <row>
+        <cell header="yes">8</cell>
+        <cell>3/2-3/6</cell>
+        <cell>Locks and Condition Variables</cell>
+        <cell>Implement threads? or add locking to earlier assignments</cell>
+      </row>
+      <row>
+        <cell header="yes">9</cell>
+        <cell>3/9-3/13</cell>
+        <cell>Semaphores, Concurrency bugs</cell>
+        <cell>Exam 2</cell>
+      </row>
+      <row>
+        <cell header="yes">10</cell>
+        <cell>3/16-3/20</cell>
+        <cell>I/O devices, Hard disk drives</cell>
+        <cell>Shell?</cell>
+      </row>
+      <row>
+        <cell header="yes">11</cell>
+        <cell>3/23-3/27</cell>
+        <cell>Files, Directories, File systems</cell>
+        <cell>something with open, ls etc</cell>
+      </row>
+      <row>
+        <cell header="yes">12</cell>
+        <cell>3/30-4/3</cell>
+        <cell>Fast File System, Journaling</cell>
+        <cell>xv6book-chapter 8</cell>
+      </row>
+      <row>
+        <cell header="yes">13</cell>
+        <cell>4/6-4/10</cell>
+        <cell>Log structured systems, SSDs</cell>
+        <cell>Exam 3</cell>
+      </row>
+    </tabular>
+  </table>
+</section>

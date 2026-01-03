@@ -1,0 +1,106 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<section xml:id="sec-grading" xmlns:xi="http://www.w3.org/2001/XInclude">
+  <title>Grading</title>
+  <p>
+    Your grade is determined by hitting thresholds in three different categories:
+    <dl>
+      <li>
+        <title>Reading</title>
+        <p>For each book section you will have to submit a <em>reading record</em> and fill out a brief <em>online quiz</em>, both due the night before the topic is to be discussed in class. The reading records are to be submitted in Canvas, and each should be a 2 minutes-or-shorter recording where you discuss 3 key things you learned and 1-2 questions you have. The quiz will also be available from Canvas and linking back to questions in this book.</p>
+        <p>
+          These are both evaluated on "completion": As long as you submitted something and answers the quiz questions, you get a completion for that day. The percent of completed readings is one factor in your final grade.
+        </p>
+      </li>
+    </dl>
+    <dl>
+      <li>
+        <title>Exams</title>
+        <p>There will be three exams to assess your level of understanding of the theoretical concepts. The first exam covers virtualization, the second deals with concurrency and the third with persistence.</p>
+        <p>Each exam will have 4 questions. If your answer to a question is considered sufficiently correct and thorough, that question is considered completed. The number of completed questions by the end of the term is a factor in your final grade.</p>
+      </li>
+      <li>
+        <title>Projects</title>
+        <p>There will be a total of 10 projects, requiring you to understand and modify the code of a small operating system. These have due dates. On a particular week you can either turn in the project due that week or one project from a previous week, but you can only submit one project on any particular week. Note however that there are some weeks without a new project, which is an opportunity to catch up on a project you had fallen behind on.</p>
+        <p>If a project submission is considered sufficiently thorough and correct, the project is considered completed. The number of completed projects contributes to your final grade.</p>
+      </li>
+    </dl>
+  </p>
+  <p>
+    These elements all come together to form a final grade: The highest row on this table where you hit all objectives determines your grade.
+  </p>
+  <tabular>
+    <row header="yes">
+      <cell>Grade</cell>
+      <cell>Readings</cell>
+      <cell>Exam Questions</cell>
+      <cell>Projects</cell>
+    </row>
+    <row>
+      <cell>A</cell>
+      <cell>90%</cell>
+      <cell>10</cell>
+      <cell>9</cell>
+    </row>
+    <row>
+      <cell>A-</cell>
+      <cell>90%</cell>
+      <cell>9</cell>
+      <cell>8</cell>
+    </row>
+    <row>
+      <cell>B+</cell>
+      <cell>80%</cell>
+      <cell>8</cell>
+      <cell>7</cell>
+    </row>
+    <row>
+      <cell>B</cell>
+      <cell>80%</cell>
+      <cell>7</cell>
+      <cell>6</cell>
+    </row>
+    <row>
+      <cell>B-</cell>
+      <cell>80%</cell>
+      <cell>6</cell>
+      <cell>5</cell>
+    </row>
+    <row>
+      <cell>C+</cell>
+      <cell>70%</cell>
+      <cell>5</cell>
+      <cell>4</cell>
+    </row>
+    <row>
+      <cell>C</cell>
+      <cell>70%</cell>
+      <cell>4</cell>
+      <cell>3</cell>
+    </row>
+    <row>
+      <cell>C-</cell>
+      <cell>70%</cell>
+      <cell>3</cell>
+      <cell>2</cell>
+    </row>
+    <row>
+      <cell>D+</cell>
+      <cell>60%</cell>
+      <cell>2</cell>
+      <cell>1</cell>
+    </row>
+    <row>
+      <cell>D</cell>
+      <cell>60%</cell>
+      <cell>1</cell>
+      <cell>0</cell>
+    </row>
+    <row>
+      <cell>F</cell>
+      <cell>---</cell>
+      <cell>---</cell>
+      <cell>---</cell>
+    </row>
+  </tabular>
+</section>

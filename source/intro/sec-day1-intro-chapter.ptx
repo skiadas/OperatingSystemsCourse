@@ -1,0 +1,215 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<section xml:id="sec-day1-intro" xmlns:xi="http://www.w3.org/2001/XInclude">
+  <title>Day 1 Introduction</title>
+  <introduction>
+    <p>We will start by looking at very simple examples of the kinds of topics this book will consider. We will be following along <url href="https://pages.cs.wisc.edu/~remzi/OSTEP/intro.pdf">the introduction chapter</url>. In our repository you want to switch to the directory under <c>ostep-code/intro</c>.</p>
+  </introduction>
+  <subsection xml:id="subsec-intro-process-multiplexing">
+    <title>Process Multiplexing</title>
+    <p>
+      We start by looking at the question of running processes. One of the magic things that an operating system does is to allow multiple programs to run all at the same time while being oblivious of each other. Take a look at the program in <c>ostep-code/intro/cpu.c</c>. You can compile it and run it (in the codespace's normal operating system) using the following instructions:
+    </p>
+    <pre>
+      gcc -o cpu cpu.c -Wall
+      ./cpu "A"
+    </pre>
+    <p>
+      You should see the program print the letter A over and over.
+    </p>
+    <exercise>
+      <statement>
+        <p>
+          Right now the program prints the provided output once every second. Which line would we need to change if we wanted it to instead print every 2 seconds?
+        </p>
+      </statement>
+      <choices>
+        <choice>
+          <statement><p><c>printf("%s\n", str);</c></p></statement>
+          <feedback />
+        </choice>
+        <choice correct="yes">
+          <statement><p><c>Spin(1);</c></p></statement>
+          <feedback />
+        </choice>
+        <choice>
+          <statement><p><c>exit(1);</c></p></statement>
+          <feedback />
+        </choice>
+        <choice>
+          <statement><p><c>char *str = argv[1];</c></p></statement>
+          <feedback />
+        </choice>
+      </choices>
+    </exercise>
+    <exercise>
+      <statement>
+        <p>
+          <ul>
+            <li>Modify the program so that it prints the message a specific number of times, say 50.</li>
+            <li>Modify it so that it takes a third argument on the command line, for the number of times to print the message. You will need to find out what function in C can convert a numerical string to an int.</li>
+            <li>Modify it so that it takes a fourth argument on the command line, for the number of seconds in-between messages.</li>
+          </ul>
+        </p>
+      </statement>
+    </exercise>
+    <p>Hit Ctrl-C to stop the process.</p>
+    <p>
+      So far nothing very interesting. You wrote a program, ran it, seeing its output. But now what happens if we have multiple programs running? We can try this out by running this same program multiple times, with the following command:
+    </p>
+    <pre>
+      ./gpu "A" &amp; ./gpu "B" &amp; ./gpu "C" &amp; ./gpu "D" &amp;
+    </pre>
+    <p>
+      What this does is to start 4 different instances of the program, then has them run in the "background" (that's what th &amp; sign does). You will now be seeing all 4 letters printed out, in some order. Not necessarily the same order each time.
+    </p>
+    <p>The important concept here is that the operating system, with the help of the hardware, makes sure to <em>multiplex</em> these four processes: i.e. get them all to execute, on possibly the same CPU, and in such a way that they all get a reasonable chance to execute. You don't see, for example, a whole bunch of "A"s before you see a "B". So the operating system suspends the execution of some of these processes and switches to another one for a while. And the processes are none the wiser that this happens at all. The key questions we will answer about this are:
+      <ul>
+        <li>What is the abstraction that the OS uses to think about each running program?</li>
+        <li>What are the <em>mechanisms</em> that the OS uses to switch the execution from one program to another? What support from the hardware are needed?</li>
+        <li>What <em>policies</em> should the OS deploy to decide how to <em>schedule</em> the different processes, i.e. how to choose which process to run next, and so on.</li>
+      </ul>
+    </p>
+    <p>
+      Since these processes run in the background, you cannot stop them by hitting Ctrl-C. To stop the processes, click the trash looking icon at the top of the terminal window, to close this shell. Then do Ctrl-J or Cmd-J to open up a new terminal. What is really happening here, using concepts we'll discuss later, is that all the four processes are "children" of the "shell process", and clicking the trash icon closes the shell process, and thus terminates all its children as well.
+    </p>
+  </subsection>
+  <subsection xml:id="subsec-intro-virtual-memory">
+    <title>Virtual Memory</title>
+    <p>The second big theme of the course is what the operating system does with the computer's memory.</p>
+    <p>Take a look at the example from Figure 2.3 in the book, which you can find in <c>ostep-code/intro/mem.c</c>. You should compile it and execute it with:</p>
+      <pre>
+        gcc -o mem mem.c -Wall
+        ./mem 0
+      </pre>
+      <p>This program demonstrates some of the magic that an operating system does with regards to the computer's memory. It is also a way to demonstrate some of the differences between C and C++ and prepare us for writing C programs. Note that in C we don't allocate memory by using the <c>new</c> key word. Instead we use <c>malloc</c>, a shorthand for "memory allocate". <c>malloc</c> takes as a parameter the number of bytes to allocate, in this instance <c>sizeof(int)</c> which is the number of bytes that integers take in this particular system, whatever that number is (probably 4 in more systems). What we get back is a pointer to the appropriate memory location (or the 0 pointer if the allocation failed).</p>
+      <p>Read that again: memory allocation may fail, and in fact in this course you need to contend with a lot of operations failing, and your code needing to check everything. In this instance the very next line says "I am asserting that the pointer is to an actual memory position (and not 0) and we should fail otherwise".</p>
+      <p>So next we print out a message showing the memory address that we reserved. Then we make sure to keep incrementing the integer value in that location, and printing the new value each time. Note the <c>atoi</c> C function which is a simple way to convert a string to an integer. This takes the first argument we passed to the call above (<c>./mem 0</c>) and turns it into the actual number 0, and uses it as the initial value.</p>
+      <p>So far nothing particularly interesting is going on here. The interesting thing comes when we try to run two versions of this program. But before we do this we need to turn off some awesome features of modern operating systems that we'll come back to later, and also to recompile. Start with the recompilation step:</p>
+      <pre>
+        gcc -o mem mem.c -Wall -fno-pie -no-pie
+      </pre>
+      <p>What this does is to instruct the compiler not produce a "position-independent executable". Don't worry about what this means for the moment. Next we need to tell the system to not randomize when allocating memory, with the following command (which will start a new shell, so you may need to use <c>cd</c> after it to get back to the intro directory):</p>
+      <pre>setarch `uname -m` -R /bin/bash</pre>
+      <p>This instructs the operating system to start a new bash shell but with the <c>-R</c> option enabled, which makes it so that Linux uses a particular <url href="https://man7.org/linux/man-pages/man2/personality.2.html">personality</url> called <c>ADDR_NO_RANDOMIZE</c>, which for us simply means that the system will be using a predictable memory address when it allocates the memory. Try to run the <c>./mem 0</c> program a few times now, and you'll see that each time it uses the same memory address to store the integer counter.</p>
+      <p>Great! With that under our belt, let's run three copies of the program:</p>
+      <pre>./mem 0 &amp; ./mem 50 &amp; ./mem 100 &amp;</pre>
+      <p>You should be seeing that all three programs (identified by their process id number) are using the exact same memory location for their numbers. But notice that each of them also has a completely independent counter. What value one of them sees does not affect what value the other one sees. Yet they all think they are using the same memory address.</p>
+      <p>So this is then the second big theme that we will consider, namely <em>virtualization of memory</em>. The operating system, with the help of the hardware, sets mechanisms in place so that each process thinks they have complete usage of the whole system memory, while in reality they each talk to a completely different location. The base mechanism for this is <em>address translation</em> and we will be taking a closer look at it at a later point.</p>
+  </subsection>
+  <subsection xml:id="subsec-concurrency">
+    <title>Concurrency</title>
+    <p>While one part of the the OS work is to protect processes from messing with each other, another part is allowing a single process to have multiple threads of computation happening seemingly simultaneously, and possibly operating on the same parts of the memory. In such a situation we need to make sure that we have correctly accounted for the various interactions between these threads. The job of the operating system in the process is ensure these switches between threads happen effortlessly and safely, and that appropriate primitives are in place to enforce synchronization patterns. While we will discuss these items more n subsequent sections, for now we will see what happens with the simple program of Figure 2.5 in the book, which you can find in the <c>ostep/intro/threads.c</c> file. Let's compile and run it:</p>
+    <pre>
+      gcc -o threads threads.c -Wall
+      ./threads 100
+    </pre>
+    <p>What this program is meant to do is create two threads that both update the same memory location, incrementing it 100 times total each. So we would expect the final answer to be 200. Run that command a few times, what answers do you get? Also try with a bigger initial value, e.g. 10000.</p>
+    <exercise>
+      <statement>
+        <p>What do you think is happening here? What goes wrong? Think about this before reading on.</p>
+      </statement>
+    </exercise>
+    <p>What is happening here is subtle and extremely hard to watch out for. It does NOT have to do with the threads not running for the correct number of times: Each runs for exactly 100 times (or whatever the given number is) and updates the number that many times. The problem is the instruction <c>counter++</c>. This seemingly simple instruction at a lower level becomes multiple steps:
+    <ul>
+      <li>Read the current value of <c>counter</c>.</li>
+      <li>Increase that number by 1.</li>
+      <li>Store the new value back in <c>counter</c>.</li>
+    </ul>
+    The problem is this: Threads can be interrupted. For example thread A may start out with a counter value of say 5, do the first 2 steps above, and is ready to write the value 6 in. But before it does so the other thread, let's call it B, gets to run for a while, and does a few cycles of incrementing that counter value of 5 all the way to say 10. When thread A runs again it has no idea all this has happened and that the value of the counter is 10 now. So it will go ahead and write 6 in, completely negating all the work that thread B did in the meantime. <em>The work of one thread may be completely negated by the interrupted work of another thread</em>.</p>
+    <p>Recognizing such problems and providing adequate structures to prevent them will occupy a lot of our attention during the concurrency part of this course.</p>
+  </subsection>
+  <subsection xml:id="subsec-persistence">
+    <title>Persistence</title>
+    <p>The third big part of the course concerns itself with persistence, namely the storage of information on a more permanent medium than a computer's memory. The operating system has a number of challenging issues to address in that context:
+      <ul>
+        <li>There are many different storage devices with completely different characteristics. How does the OS provide to processes access to read from and write to these devices, while having those processes have to worry about the details?</li>
+        <li>How does the OS allow processes to write to a device, while at the same time preventing that process from possibly overwriting what another process has written?</li>
+        <li>Accessing a device is often hundreds of times slower than accessing memory. What mechanisms does the OS employ to minimize the impact of this slowdown on running programs?</li>
+        <li>How does the OS ensure that information is not lost or partially mangled due to something like a power outage? If the OS was in the process of changing something in the device, we don't want to leave the system in an uncertain state.</li>
+      </ul>
+    </p>
+  </subsection>
+  <subsection xml:id="subsec-design-goals-and-history">
+    <title>Design Goals and History</title>
+    <p>Read the rest of the  <url href="https://pages.cs.wisc.edu/~remzi/OSTEP/intro.pdf">introduction chapter</url> to learn about the design goals for an operating system as well as a bit of the historical development of operating systems, then answer the following questions.</p>
+    <exercise label="intro-os-design-goals">
+      <statement>
+        <p>Which of the following are design goals for an operating system?</p>
+      </statement>
+      <choices>
+        <choice>
+          <statement>
+            <p>Making sure the executed code of a program is logically correct</p>
+          </statement>
+          <feedback><p>No the logical correctness of a program is solely the responsibility of the user.</p></feedback>
+        </choice>
+        <choice>
+          <statement>
+            <p>Making sure an executed program doesn't run forever</p>
+          </statement>
+          <feedback><p>No an operating system would allow a program to run forever. However it will make sure that other programs also get a chance to run in-between.</p></feedback>
+        </choice>
+        <choice correct="yes">
+          <statement>
+            <p>Creating abstractions that make the computer easier for programs to use.</p>
+          </statement>
+          <feedback><p>Yes this is one of the key tasks of the operating system.</p></feedback>
+        </choice>
+        <choice correct="yes">
+          <statement>
+            <p>Minimizing the overhead of the operating system, and thus maximizing the performance a program can get out of the hardware.</p>
+          </statement>
+          <feedback><p>Yes performance is one of the key design goals for an operating system.</p></feedback>
+        </choice>
+        <choice correct="yes">
+          <statement>
+            <p>Protecting the system and other processes from malicious or unintentionally damaging behavior.</p>
+          </statement>
+          <feedback><p>Yes protection of the system and other processes is one of the main responsibilities of the OS.</p></feedback>
+        </choice>
+        <choice correct="yes">
+          <statement>
+            <p>Ensuring that the system runs continuously without failure.</p>
+          </statement>
+          <feedback><p>Yes reliability is a key feature of a well-designed OS.</p></feedback>
+        </choice>
+      </choices>
+    </exercise>
+    <exercise label="intro-os-history">
+      <statement>
+        <p>Match these terms to their definitions.</p>
+      </statement>
+      <matches>
+        <match order="1">
+          <premise>batch processing</premise>
+          <response>running one program at a time</response>
+        </match>
+        <match order="2">
+          <premise>system call</premise>
+          <response>executing specific instructions at privileged level</response>
+        </match>
+        <match order="3">
+          <premise>trap handler</premise>
+          <response>the code that processes system calls</response>
+        </match>
+        <match order="4">
+          <premise>user mode</premise>
+          <response>a reduced privilege mode with limited access to system resources</response>
+        </match>
+        <match order="5">
+          <premise>kernel mode</premise>
+          <response>an elevated privilege mode with unlimited access to system resources</response>
+        </match>
+        <match order="6">
+          <premise>memory protection</premise>
+          <response>preventing one program from accessing another program's memory</response>
+        </match>
+        <match order="7">
+          <premise>multiprogramming</premise>
+          <response>many processes are loaded in memory at the same time and execute alternatingly</response>
+        </match>
+      </matches>
+    </exercise>
+  </subsection>
+  </section>

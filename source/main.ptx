@@ -12,8 +12,8 @@
     <xi:include href="./frontmatter.ptx" />
 
     <!-- Include chapters -->
-    <xi:include href="./ch-general-intro.ptx" />
-    <xi:include href="./ch-process-virtualization.ptx" />
+    <xi:include href="./intro/ch-general-intro.ptx" />
+    <xi:include href="./process-virtualization/ch-process-virtualization.ptx" />
     <xi:include href="./ch-memory-virtualization.ptx" />
     <xi:include href="./ch-concurrency.ptx" />
     <xi:include href="./ch-persistence.ptx" />

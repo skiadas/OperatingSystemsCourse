@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<chapter xml:id="ch-general-intro" xmlns:xi="http://www.w3.org/2001/XInclude">
+  <title>Introduction and General Resources</title>
+
+  <introduction>
+    <p>The is a course guide meant to be used along with the textbooks described in <xref ref="sec-textbook"/>. It will provide structure in the form of linking to the particular sections we will cover, and discussing exercises and projects. It will also include in-browser practice problems.</p>
+    <p><xref ref="sec-codespace"/> discusses how to get started with our codespace set up, which is what you will be using for practice as well as to work on and turn in your projects.</p>
+    <p><xref ref="sec-class-schedule"/> will likely be your main reference point, including directions and links on what we would be covering at any particular point in time.</p>
+  </introduction>
+
+  <!-- include sections -->
+  <xi:include href="sec-textbook.ptx" />
+  <xi:include href="sec-codespace.ptx" />
+  <xi:include href="sec-class-schedule.ptx" />
+  <xi:include href="sec-objectives.ptx" />
+  <xi:include href="sec-grading.ptx" />
+  <xi:include href="sec-day1-intro-chapter.ptx" />
+</chapter>

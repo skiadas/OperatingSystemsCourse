@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<chapter xml:id="ch-process-virtualization" xmlns:xi="http://www.w3.org/2001/XInclude">
+  <title>Process Virtualization</title>
+
+  <introduction>
+    <p>We start our discussion with the process virtualization part. We will look at how the OS and the hardware can allow multiple processes to run seemingly concurrently. We will see
+      <ul>
+        <li>how process instructions are executed,</li>
+        <li>how a process can be interrupted,</li>
+        <li>how a switch to another process happens, and</li>
+        <li>how the OS schedules which process to run next.</li>
+      </ul>
+      This will be the first two weeks of the course. Let's begin.</p>
+  </introduction>
+
+  <xi:include href="sec-processes.ptx" />
+
+</chapter>

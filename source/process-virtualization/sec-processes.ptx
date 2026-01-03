@@ -1,0 +1,332 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<section xml:id="sec-processes" xmlns:xi="http://www.w3.org/2001/XInclude">
+  <title>Processes</title>
+  <p>Start by reading the <url href="https://pages.cs.wisc.edu/~remzi/OSTEP/cpu-intro.pdf">Process chapter</url> introduction (before 4.1).</p>
+  <exercise label="ex-processes-intro">
+    <statement>
+      <p>The operating system implements <em>mechanisms</em> and <em>processes</em>. What do those refer to?</p>
+    </statement>
+    <choices>
+      <choice>
+        <statement><p>
+          Mechanisms are pure hardware features that implement a needed piece of functionality.
+        </p></statement>
+      </choice>
+      <choice correct="yes">
+        <statement><p>
+          Mechanisms are low level protocols that implement a needed piece of functionality.
+        </p></statement>
+      </choice>
+      <choice>
+        <statement><p>
+          Mechanisms are function calls that implement a needed piece of functionality.
+        </p></statement>
+      </choice>
+      <choice correct="yes">
+        <statement><p>
+          Policies are algorithms that the OS employs to make some decision.
+        </p></statement>
+      </choice>
+      <choice>
+        <statement><p>
+          Policies are structured documents that the OS employs to make some decisions.
+        </p></statement>
+      </choice>
+      <choice correct="yes">
+        <statement><p>
+          Implementing CPU virtualization requires both mechanisms and policies.
+        </p></statement>
+      </choice>
+      <choice>
+        <statement><p>
+          A <em>context switch</em> is a policy.
+        </p></statement>
+      </choice>
+      <choice correct="yes">
+        <statement><p>
+          Scheduling a process requires a policy.
+        </p></statement>
+      </choice>
+    </choices>
+  </exercise>
+  <p>Read section 4.1 then answer this question.</p>
+  <exercise label="ex-processes-process">
+    <statement>
+      <p>
+        What parts of the machine state constitute a <em>process</em>?
+      </p>
+    </statement>
+    <choices>
+      <choice correct="yes">
+        <statement>
+          <p>the memory that the process can address</p>
+        </statement>
+      </choice>
+      <choice correct="yes">
+        <statement>
+          <p>the values of the various registers</p>
+        </statement>
+      </choice>
+      <choice>
+        <statement>
+          <p>the file location in the disk that holds the process code</p>
+        </statement>
+        <feedback>
+          <p>Process code is generally in memory once the process starts running, and changes to the disk version will not change the running program.</p>
+        </feedback>
+      </choice>
+      <choice correct="yes">
+        <statement>
+          <p>the program counter</p>
+        </statement>
+      </choice>
+      <choice correct="yes">
+        <statement>
+          <p>the files that the process has open</p>
+        </statement>
+      </choice>
+      <choice correct="yes">
+        <statement>
+          <p>stack of function calls the process is currently executing</p>
+        </statement>
+      </choice>
+      <choice>
+        <statement>
+          <p>the results of function calls the process has completed</p>
+        </statement>
+        <feedback>
+          <p>These would not be maintained anywhere long term.</p>
+        </feedback>
+      </choice>
+    </choices>
+  </exercise>
+  <p>Read section 4.2 then answer this question.</p>
+  <exercise label="ex-processes-api-capabilities">
+    <statement>
+      <p>What are the general capabilities expected of a modern process API?</p>
+    </statement>
+    <choices>
+      <choice correct="yes">
+        <statement>
+          <p>creating new processes (by for example running a program from the shell)</p>
+        </statement>
+      </choice>
+      <choice correct="yes">
+        <statement>
+          <p>forcefully stopping a process</p>
+        </statement>
+      </choice>
+      <choice correct="no">
+        <statement>
+          <p>changings a process' id</p>
+        </statement>
+      </choice>
+      <choice correct="yes">
+        <statement>
+          <p>waiting for a process to end</p>
+        </statement>
+      </choice>
+      <choice correct="yes">
+        <statement>
+          <p>suspending a process' execution for a period of time</p>
+        </statement>
+      </choice>
+      <choice>
+        <statement>
+          <p>changing a process' arguments</p>
+        </statement>
+      </choice>
+      <choice correct="yes">
+        <statement>
+          <p>finding out information about the running process, like how long it has been running for</p>
+        </statement>
+      </choice>
+      <choice>
+        <statement>
+          <p>allowing a process to access another process' information</p>
+        </statement>
+      </choice>
+    </choices>
+  </exercise>
+  <p>Read section 4.3, about what goes on during process creation.</p>
+  <exercise label="ex-processes-creation">
+    <statement>
+      <p>Which of the following are parts of the steps for creating a new process?</p>
+    </statement>
+    <choices>
+      <choice correct="yes">
+        <statement>
+          <p>Reading the program code from disk into memory</p>
+        </statement>
+      </choice>
+      <choice>
+        <statement>
+          <p>Removing other processes from memory</p>
+        </statement>
+        <feedback>
+          <p>This would not in general be needed, unless there is limited memory available. The OS can manage having multiple processes in memory at the same time.</p>
+        </feedback>
+      </choice>
+      <choice correct="yes">
+        <statement>
+          <p>Allocating memory for the process' stack</p>
+        </statement>
+      </choice>
+      <choice correct="yes">
+        <statement>
+          <p>Allocating memory for the process' heap</p>
+        </statement>
+      </choice>
+      <choice correct="yes">
+        <statement>
+          <p>Setting up standard file descriptors</p>
+        </statement>
+      </choice>
+    </choices>
+  </exercise>
+  <p>Read section 4.4 on process states.</p>
+  <exercise label="ex-processes-states">
+    <statement>
+      <p>What are the states that a process can be in?</p>
+    </statement>
+    <choices>
+      <choice correct="yes">
+        <statement>
+          <p>Ready</p>
+        </statement>
+      </choice>
+      <choice correct="yes">
+        <statement>
+          <p>Running</p>
+        </statement>
+      </choice>
+      <choice correct="no">
+        <statement>
+          <p>Suspended</p>
+        </statement>
+        <feedback>
+          <p>A process that is suspended is actually in the ready state.</p>
+        </feedback>
+      </choice>
+      <choice correct="yes">
+        <statement>
+          <p>Blocked</p>
+        </statement>
+      </choice>
+      <choice correct="no">
+        <statement>
+          <p>Terminated</p>
+        </statement>
+        <feedback>
+          <p>While it may be necessary to consider this state temporarily, terminated processes are simply removed from the system and their resources are reclaimed.</p>
+        </feedback>
+      </choice>
+    </choices>
+  </exercise>
+  <exercise label="ex-processes-state-transitions">
+    <statement>
+      <p>Which of the following state transitions are possible, and as a result of what action?</p>
+    </statement>
+    <matches>
+      <match order="1">
+        <premise>Ready to Running</premise>
+        <response>Possible by OS scheduling</response>
+      </match>
+      <match order="2">
+        <premise>Running to Ready</premise>
+        <response>Possible by OS scheduling</response>
+      </match>
+      <match order="3">
+        <premise>Running to Blocked</premise>
+        <response>Possible by I/O call</response>
+      </match>
+      <match order="4">
+        <premise>Blocked to Running</premise>
+        <response>Not possible</response>
+      </match>
+      <match order="5">
+        <premise>Blocked to Ready</premise>
+        <response>Possible by I/O return</response>
+      </match>
+    </matches>
+  </exercise>
+  <p>Read section 4.5 about the data structures used to represent a process. Also take a look at our xv6-riscv code, specifically <c>kernel/proc.h</c>. How do those definitions compare to what you see in the book? How do the process states map to the ones discussed in the book?</p>
+  <exercise label="ex-processes-code-states-zombie">
+    <statement>
+      <p>Looking at the <c>proc_state</c> options in the code, which of those options describes the state of a process after it has been terminated but before it has been fully eliminated from the system?</p>
+    </statement>
+    <choices>
+      <choice>
+        <statement>
+          <p><c>UNUSED</c></p>
+        </statement>
+      </choice>
+      <choice>
+        <statement>
+          <p><c>USED</c></p>
+        </statement>
+        <feedback>
+          <p>No this is actually the state when the process structure is being set up.</p>
+        </feedback>
+      </choice>
+      <choice>
+        <statement>
+          <p><c>SLEEPING</c></p>
+        </statement>
+        <feedback>
+          <p>No, this is basically the blocked state.</p>
+        </feedback>
+      </choice>
+      <choice correct="yes">
+        <statement>
+          <p><c>ZOMBIE</c></p>
+        </statement>
+        <feedback>
+          <p>Unix programmers certainly have a weird sense of humor, right?</p>
+        </feedback>
+      </choice>
+    </choices>
+  </exercise>
+  <exercise label="ex-processes-code-states-runnable">
+    <statement>
+      <p>Looking at the <c>proc_state</c> options in the code, which of those options describes the state of the process when it is in what the book described as the "ready" state?</p>
+    </statement>
+    <choices>
+      <choice>
+        <statement>
+          <p><c>UNUSED</c></p>
+        </statement>
+      </choice>
+      <choice>
+        <statement>
+          <p><c>USED</c></p>
+        </statement>
+        <feedback>
+          <p>No this is actually the state when the process structure is being set up.</p>
+        </feedback>
+      </choice>
+      <choice correct="yes">
+        <statement>
+          <p><c>RUNNABLE</c></p>
+        </statement>
+        <feedback>
+          <p>Very good!</p>
+        </feedback>
+      </choice>
+      <choice>
+        <statement>
+          <p><c>SLEEPING</c></p>
+        </statement>
+        <feedback>
+          <p>No, this is basically the blocked state.</p>
+        </feedback>
+      </choice>
+      <choice>
+        <statement>
+          <p><c>RUNNING</c></p>
+        </statement>
+      </choice>
+    </choices>
+  </exercise>
+</section>

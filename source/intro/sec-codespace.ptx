@@ -1,0 +1,59 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<section xml:id="sec-codespace" xmlns:xi="http://www.w3.org/2001/XInclude">
+  <title>Codespace usage</title>
+  <p>We will be using a GitHub codespace setup for work on the project. You will each have a copy to a private codespace, to be used for your work, and you should have received an email invitation from me.</p>
+  <paragraphs>
+    <title>Initial setup</title>
+  <p>
+    Let's get you set up:
+    <ul>
+      <li>Check your email for the invitation to collaborate, and follow the link. It should take you to GitHub repository.</li>
+      <li>To the right of the repository name you'll see a number of options, starting with Pin or Watch. Make sure you click on the <em>Star</em>section to the far right on that line, to star the repository. This will make it easier to find the repository again in the future.</li>
+      <li>You should be seeing a bit green button that says "Code". Click it, then switch to the "Codespaces" tab, then "Create codespace on main". This will take a while but should get you to a new window, with a sidebar section showing a file structure and a bottom panel showing a terminal. Congratulations, you are now in a codespace!</li>
+      <li>To exit your codespace, bring up the command pallette (cmd-shift-p on mac, ctrl-shift-p on windows), then type "stop" and you should see the option "Codespaces: Stop Current codespace" pop up. Choose it (you may be able to just hit Enter if it's the currently selected choice) and this should stop your codespace, for now. You will know it's done when the screen changes. Go ahead and close that window.</li>
+      <li>Now let's find the codespace again. Go to <url href="https://github.com/">GitHub</url> and on the top left you should be able to open a menu and see a <url href="https://github.com/codespaces">Codespaces</url> option. Click it and you should see a list of your existing codespaces. You likely don't have too many.</li>
+      <li>Find the codespace corresponding to your repository, likely called <c>ostep-resources-yourname</c>. Find the 3 dots on the right of it, and click those to bring up a small menu. Find the option there that says "auto-delete codespace" and make sure you de-select it. This will prevent your codespace for being deleted because you didn't use it for a few days.</li>
+      <li>You should also click the "Rename" option in that menu, and give your codespace a better name so you can recognize it later. Something like "CS345 Codespace" might be better.</li>
+      <li>When you are ready to head back in, simply click the codespace name, it should be showing up in bold.</li>
+    </ul>
+  </p>
+  </paragraphs>
+  <paragraphs>
+    <title>GitHub Education</title>
+  <p>
+    One thing we should do before leaving the setup part is to make sure that you have applied for an elevated GitHub account. GitHub provides every student who wishes to with a GitHub Pro account, as well as other useful perks. The most pertinent for us at this point is that a GitHub Pro account allows you to use a lot more codespace hours during each month. A normal account can use only 120 hours each month, which while a lot can be easily reached if you have multiple CS courses at the same time. The Pro account gives you 180 hours total each month, which means an average of 6 hours of use each day.</p>
+    <p>To claim these extra hours, simply head over to the <url href="https://github.com/education/students">GitHub Education</url> site and click the "Join GitHub Education" button (or scroll down to the "Get Verified" button). Fill out the appropriate form, then you may need to wait a bit for confirmation.</p>
+  </paragraphs>
+  <paragraphs>
+    <title>Book Example code</title>
+    <p>When you get back into your codespace, you should see a directory called <c>ostep-code</c>. This directory contains sample code from the various book chapters, and it is a great place to look at for trying out examples provided in the book. For our first day we'll in particular take a look at the <c>intro</c> location in there. In the terminal window at the bottom of your VSCode interface type <c>cd ostep-code/intro</c>. You should see the path change to that directory. If you now type <c>ls</c> you should be seeing a number of file resources. You can do this with other locations there.</p>
+    <p>When you get back into your codespace, you should see a directory called <c>ostep-code</c>. This directory contains sample code from the various book chapters, and it is a great place to look at for trying out examples provided in the book. For our first day we'll in particular take a look at the <c>intro</c> location in there. In the terminal window at the bottom of your VSCode interface type <c>cd ostep-code/intro</c>. You should see the path change to that directory. If you now type <c>ls</c> you should be seeing a number of file resources. You can do this with other locations there.</p>
+  </paragraphs>
+  <paragraphs>
+    <title>xv6 code</title>
+    <p>Back at the top level (you may need to use <c>cd ..</c> or something similar to move up a few levels if you are in the book code sections) You will also find a directory called <c>xv6-riscv</c>. This is a mini operating system, only 12k lines of code, and during the course we will be working with this system, trying to understand how it works as well as extending it in various ways. This is what your projects will be about.</p>
+    <p>For now let's make sure we can get the operating system to run. We'll need to do some work for that, and install a few things:
+      <ul>
+        <li>Make sure you are in the <c>xv6-risc</c> section in the terminal window. Do <c>pwd</c> to see where you are, and use an appropriate <c>cd ....</c> command to move around.</li>
+        <li><p>Run the following three commands:</p>
+          <pre>
+            sudo apt update
+            sudo apt-get -y install git build-essential gdb-multiarch   qemu-system-misc gcc-riscv64-linux-gnu binutils-riscv64-linux-gnu
+            make qemu
+          </pre>
+          <p>If all has gone well you should see the following:</p>
+          <pre>
+            hart 2 starting
+            hart 1 starting
+            init: starting sh
+            $
+          </pre>
+          <p>This means our mini operating system is running in a virtual machine (this is what qemu) provides. You can type a few commands, for example <c>ls</c> should list for you what programs are available on this operating system. You will see a very small list right now. But it works!</p>
+          <p>To exit this shell type Ctrl-a and then x. You should now be back in the normal prompt.</p>
+          <p>To run the operating system again, you just need to run the <c>make qemu</c> command again. In fact every time you want to interact with xv6, you run that command.</p>
+        </li>
+      </ul>
+    </p>
+  </paragraphs>
+</section>

@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<section xml:id="sec-textbook" xmlns:xi="http://www.w3.org/2001/XInclude">
+  <title>Textbook</title>
+  <p>The book we will be using is <url href="https://pages.cs.wisc.edu/~remzi/OSTEP/">Operating Systems: Three Easy Pieces</url>, typically abbreviated as <abbr>OSTEP</abbr>. You may buy a physical copy of it if you would like, or directly access the PDF chapters online. These notes will use links to the PDF chapters online.</p>
+  <p>
+    We will also be using a secondary resource, a book describing the mini operating system we will be working with. You can find that book at <url href="https://xv6-guide.github.io/xv6-riscv-book/" />.
+  </p>
+</section>
