@@ -229,24 +229,24 @@
       <p>Which of the following state transitions are possible, and as a result of what action?</p>
     </statement>
     <matches>
-      <match order="1">
-        <premise>Ready to Running</premise>
+      <match>
+        <premise order="1">Ready to Running</premise>
         <response>Possible by OS scheduling</response>
       </match>
-      <match order="2">
-        <premise>Running to Ready</premise>
+      <match>
+        <premise order="2">Running to Ready</premise>
         <response>Possible by OS interrupt</response>
       </match>
-      <match order="3">
-        <premise>Running to Blocked</premise>
+      <match>
+        <premise order="3">Running to Blocked</premise>
         <response>Possible by I/O call</response>
       </match>
-      <match order="4">
-        <premise>Blocked to Running</premise>
+      <match>
+        <premise order="4">Blocked to Running</premise>
         <response>Not possible</response>
       </match>
-      <match order="5">
-        <premise>Blocked to Ready</premise>
+      <match>
+        <premise order="5">Blocked to Ready</premise>
         <response>Possible by I/O return</response>
       </match>
     </matches>
@@ -328,5 +328,222 @@
         </statement>
       </choice>
     </choices>
+  </exercise>
+  <exercise label="ex-processes-code-dive-num-procs">
+    <statement>
+      <p>Look at the <c>kernel/proc.c</c> file for the code that governs the creation of procedures. You should find there an array used to store <c>proc</c> objects (representing storage locations for running processes in the system). The number of entries in that array represents the maximum number of active processes in the system. How many concurrent processes does the xv6 system allow for? (You will need to search through other files to find where the constant is defined) <fillin characters="5" answer="64" mode="number" /></p>
+    </statement>
+    <evaluation>
+      <evaluate>
+        <test correct="yes"><numcmp use-answer="yes" /></test>
+      </evaluate>
+    </evaluation>
+  </exercise>
+  <exercise label="ex-processes-code-dive-allocid">
+    <statement>
+      <p>
+        In <c>kernel/proc.c</c> you will find a function that is used to allocate a new "process id" (usually referred to as a <c>pid</c>) for a to-be-created process. Locate this function (you should recognize the acronym name of it when you see it). How does the system determine this pid?
+      </p>
+    </statement>
+    <choices>
+      <choice>
+        <statement>
+          <p>It selects a random integer, making sure the integer is not in use already.</p>
+        </statement>
+      </choice>
+      <choice correct="yes">
+        <statement>
+          <p>It uses an ever-increasing integer counter.</p>
+        </statement>
+      </choice>
+      <choice>
+        <statement>
+          <p>It uses the index in the proc array where the process will be stored.</p>
+        </statement>
+      </choice>
+      <choice>
+        <statement>
+          <p>It uses the smallest positive integer that is not already being used (so if a process terminates, its process id can be used for a later process).</p>
+        </statement>
+      </choice>
+    </choices>
+  </exercise>
+    <p>Now we look at the <url href="https://pages.cs.wisc.edu/~remzi/OSTEP/cpu-api.pdf">Process API chapter</url> which discusses important system calls that the kernel provides to enable us to manage processes. Start by reading section 5.1 about the <c>fork</c> system call, quite possibly the weirdest function you have seen. Compile and run the code in figure 5.1, which can also be found in the <c>ostep/cpu-api/p1.c</c> code file. (You can build all programs by doing <c>make all</c> from that directory, then delete them when you are done by running <c>make clean</c>.)</p>
+    <p>Make sure you really understand which lines from that file are executed in the child process, which lines are executed in the parent, and which are executed in both.</p>
+  <exercise label="ex-processes-api-fork-num-procs">
+    <statement>
+      <p>How many processes ended up running when we ran the program <c>p1</c>? <fillin characters="5" answer="2" mode="number" /></p>
+    </statement>
+    <evaluation>
+      <evaluate>
+        <test correct="yes"><numcmp use-answer="yes" /></test>
+      </evaluate>
+    </evaluation>
+  </exercise>
+  <exercise label="ex-processes-api-fork-child-start">
+    <statement>
+      <p>When a <c>fork</c> call happens, where does the child process start execution?</p>
+    </statement>
+    <choices>
+      <choice>
+        <statement>
+          <p>In <c>main()</c>.</p>
+        </statement>
+      </choice>
+      <choice correct="true">
+        <statement>
+          <p>Exactly where the <c>fork</c> call happens.</p>
+        </statement>
+      </choice>
+      <choice>
+        <statement>
+          <p>At a location we specify as part of the <c>fork</c> call.</p>
+        </statement>
+      </choice>
+    </choices>
+  </exercise>
+  <exercise label="ex-processes-api-fork-pids">
+    <statement>
+      <p>Suppose a process with pid 45 calls <c>fork</c> and this creates a child process with pid 87. Then the return value of the <c>fork()</c> call from the point of view of the parent is <fillin characters="5" answer="87" /> and the return value from the point of view of the child is <fillin characters="5" answer="0" /></p>
+    </statement>
+    <evaluation>
+      <evaluate>
+        <test correct="yes"><numcmp use-answer="yes" /></test>
+      </evaluate>
+      <evaluate>
+        <test correct="yes"><numcmp use-answer="yes" /></test>
+      </evaluate>
+    </evaluation>
+  </exercise>
+  <exercise label="ex-processes-api-fork-fails">
+    <statement>
+      <p>
+        What would happen if the attempt to <c>fork</c> a process fails (for example there is no room in the system for more processes)?
+      </p>
+    </statement>
+    <choices>
+      <choice correct="yes">
+        <statement>
+          <p>The <c>fork</c> call returns a negative number.</p>
+        </statement>
+      </choice>
+      <choice>
+        <statement>
+          <p>The system freezes.</p>
+        </statement>
+      </choice>
+      <choice>
+        <statement>
+          <p>An exception is thrown.</p>
+        </statement>
+      </choice>
+      <choice>
+        <statement>
+          <p>The <c>fork</c> call returns 0.</p>
+        </statement>
+      </choice>
+    </choices>
+  </exercise>
+  <exercise label="ex-processes-api-fork-multiple">
+    <statement>
+      <p>This is a bit more open-ended: Change program 1 so that it creates a specific number of children (stored in some variable N). You need to be careful, as a naive approach by wrapping everything in a for loop will create many more children (e.g. 7 children if you ask it for 3).</p>
+    </statement>
+    <hint>
+      <p>Each child continues execution exactly where the <c>fork()</c> call occurs, and if in the middle of the loop it means that the loop will also continue in the child process, not just in the parent process. You need to make sure children exit out of the for loop.</p>
+    </hint>
+  </exercise>
+  <p>Now read through section 5.2, which discusses the <c>wait()</c> call that can be used by a process to wait for one of its children to end. Compile and run the program in Figure 5.2, also found in the file under <c>ostep/cpu-intro/p2.c</c>. </p>
+  <exercise label="ex-processes-api-wait-return">
+    <statement>
+      <p>What is the return value of the <c>wait</c> call?</p>
+    </statement>
+    <choices>
+      <choice>
+        <statement>
+          <p>There is no return value.</p>
+        </statement>
+      </choice>
+      <choice>
+        <statement>
+          <p>The time that the child process has been running for.</p>
+        </statement>
+      </choice>
+      <choice correct="yes">
+        <statement>
+          <p>The pid of the terminated child.</p>
+        </statement>
+      </choice>
+      <choice>
+        <statement>
+          <p>The number of running children.</p>
+        </statement>
+      </choice>
+    </choices>
+  </exercise>
+  <exercise label="ex-processes-api-wait-for-all-children">
+    <statement>
+      <p>If a process has multiple children, when does that the <c>wait</c> call return?</p>
+    </statement>
+    <choices>
+      <choice>
+        <statement>
+          <p>Immediately.</p>
+        </statement>
+      </choice>
+      <choice>
+        <statement>
+          <p>When all the children have terminated.</p>
+        </statement>
+      </choice>
+      <choice>
+        <statement>
+          <p>When the child with the smallest pid terminates.</p>
+        </statement>
+      </choice>
+      <choice correct="yes">
+        <statement>
+          <p>When any child terminates.</p>
+        </statement>
+      </choice>
+    </choices>
+  </exercise>
+  <exercise label="ex-processes-api-wait-multiple">
+    <statement>
+      <p>This is a bit more open-ended: Change this program p2 so that it creates a specific number of children (stored in some variable N), then waits for them all to finish and records the pids in the order the children finished. After that, it prints out all the pids in that same order.</p>
+    </statement>
+    <p>Now read section 5.3, which discusses the <c>exec</c> call. This is the call used to run a program different than the current program. Compile and run the program in Figure 5.3, that you can find in <c>ostep-code/cpu-api/p3.c</c>. </p>
+  </exercise>
+  <exercise label="ex-processes-api-exec-original">
+    <statement>
+      <p>When we use <c>execvp</c> to run another program, what happens to the original program?</p>
+    </statement>
+    <choices>
+      <choice>
+        <statement>
+          <p>The original program continues executing just below the <c>execvp</c> line.</p>
+        </statement>
+      </choice>
+      <choice correct="yes">
+        <statement>
+          <p>The original program doesn't run any more.</p>
+        </statement>
+        <feedback>
+          <p>Read the documentation for <c>execvp</c> by running <c>man execvp</c>. What happens if the call fails to start the new program? Try to make the example p3 fail by calling a program that doesn't exist (for example <c>wce</c> instead of <c>wc</c>).</p>
+        </feedback>
+      </choice>
+      <choice correct="yes">
+        <statement>
+          <p>The original program will only continue to run if there was an error in <c>execvp</c> executing the new program (for example if the file for the new program could not be found).</p>
+        </statement>
+      </choice>
+    </choices>
+  </exercise>
+  <exercise label="ex-processes-api-exec-changed-example">
+    <statement>
+      <p>Modify the provided program so that it instead executes the <c>ls</c> program just as if we had typed: <c>ls -l ..</c>. You should see as a result a list of the different directories like <c>cpu-api</c>.</p>
+    </statement>
+    <hint>
+      <p>You will need to extend the array used to provide arguments to the new program, as the call described above needs three different entries in the command line.</p>
+    </hint>
   </exercise>
 </section>

@@ -8,7 +8,7 @@
     <target
       name="runestone"
       format="html"
-      publication="publication.ptx"
+      publication="runestone.ptx"
       output-dir="published/operating-systems-course"
     />
     <target name="web" format="html" />

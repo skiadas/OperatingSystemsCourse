@@ -181,32 +181,32 @@
         <p>Match these terms to their definitions.</p>
       </statement>
       <matches>
-        <match order="1">
-          <premise>batch processing</premise>
+        <match>
+          <premise order="1">batch processing</premise>
           <response>running one program at a time</response>
         </match>
-        <match order="2">
-          <premise>system call</premise>
+        <match>
+          <premise order="2">system call</premise>
           <response>executing specific instructions at privileged level</response>
         </match>
-        <match order="3">
-          <premise>trap handler</premise>
+        <match>
+          <premise order="3">trap handler</premise>
           <response>the code that processes system calls</response>
         </match>
-        <match order="4">
-          <premise>user mode</premise>
+        <match>
+          <premise order="4">user mode</premise>
           <response>a reduced privilege mode with limited access to system resources</response>
         </match>
-        <match order="5">
-          <premise>kernel mode</premise>
+        <match>
+          <premise order="5">kernel mode</premise>
           <response>an elevated privilege mode with unlimited access to system resources</response>
         </match>
-        <match order="6">
-          <premise>memory protection</premise>
+        <match>
+          <premise order="6">memory protection</premise>
           <response>preventing one program from accessing another program's memory</response>
         </match>
-        <match order="7">
-          <premise>multiprogramming</premise>
+        <match>
+          <premise order="7">multiprogramming</premise>
           <response>many processes are loaded in memory at the same time and execute alternatingly</response>
         </match>
       </matches>
