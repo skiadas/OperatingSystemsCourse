@@ -47,7 +47,7 @@ jobs:
                     pretext build web
                 fi
             - name: stage deployment
-              run: pretext deploy --stage-only
+              run: pretext deploy web --stage-only
 
             - name: Bundle output/stage as artifact
               uses: actions/upload-artifact@v4
