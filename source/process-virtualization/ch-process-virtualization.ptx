@@ -15,5 +15,6 @@
   </introduction>
 
   <xi:include href="sec-processes.ptx" />
+  <xi:include href="sec-direct-execution.ptx" />
 
 </chapter>

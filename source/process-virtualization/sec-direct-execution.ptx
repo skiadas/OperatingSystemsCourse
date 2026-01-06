@@ -1,0 +1,270 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<section xml:id="sec-direct-execution" xmlns:xi="http://www.w3.org/2001/XInclude">
+  <title>Direct Execution</title>
+  <p>Read the <url href="https://pages.cs.wisc.edu/~remzi/OSTEP/cpu-mechanisms.pdf">Direct Execution</url> chapter, section 6.1.</p>
+  <exercise label="ex-time-sharing-priorities">
+    <statement>
+      <p>What are the considerations that the OS needs to keep in mind when setting up time-sharing mechanisms?</p>
+    </statement>
+    <choices>
+      <choice>
+        <statement correct="yes">
+          <p>It must do so with minimal overhead.</p>
+        </statement>
+      </choice>
+      <choice>
+        <statement correct="yes">
+          <p>It must be able to regain control from any processes that want to monopolize the CPU.</p>
+        </statement>
+      </choice>
+      <choice>
+        <statement correct="no">
+          <p>It must make sure all processes get an equal time.</p>
+        </statement>
+        <feedback>
+          <p>This is not a priority, as long as all processes make progress. But some processes may need more of the CPU's time.</p>
+        </feedback>
+      </choice>
+    </choices>
+  </exercise>
+  <exercise label="ex-limited-direct-execution-order-of-steps">
+    <statement>
+      <p>When the system wants to execute a process using <em>direct execution</em>, what are the appropriate steps? Order them (and you may leave some out)</p>
+    </statement>
+    <blocks>
+      <block order="3">
+        <p>Allocate a process entry in the process list</p>
+      </block>
+      <block order="2">
+        <p>Load the program in memory</p>
+      </block>
+      <block order="1" correct="no">
+        <p>Remove other processes from memory</p>
+      </block>
+      <block order="4">
+        <p>Locate the entry point to the program</p>
+      </block>
+      <block order="5">
+        <p>Have the processor jump to the entry point</p>
+      </block>
+    </blocks>
+  </exercise>
+  <exercise label="ex-direct-execution-failed-goals">
+    <statement>
+      <p>
+        Looking at the <em>direct execution</em> model described at the beginning of section 6.1, which OS design goal(s) does it meet?
+      </p>
+    </statement>
+    <choices multiple-correct="yes">
+      <choice correct="yes">
+        <statement>
+          <p>Performance</p>
+        </statement>
+      </choice>
+      <choice correct="no">
+        <statement>
+          <p>Control</p>
+        </statement>
+      </choice>
+      <choice correct="no">
+        <statement>
+          <p>Time-sharing</p>
+        </statement>
+        <feedback>
+          <p>This is not an actual "goal" as such.</p>
+        </feedback>
+      </choice>
+    </choices>
+  </exercise>
+  <p>Read section 6.2 about the problem of restricted operations, and system calls. Make sure you study carefully Figure 6.2, it packs a lot of important information.</p>
+  <exercise label="ex-restricted-operations-true-false">
+    <statement>
+      <p>Determine which of these statements are true.</p>
+    </statement>
+    <choices multiple-correct="yes">
+      <choice correct="yes">
+        <statement>
+          <p>In user mode the program can write to its own memory.</p>
+        </statement>
+      </choice>
+      <choice correct="no">
+        <statement>
+          <p>To make a system call the user program must use the memory address where the corresponding kernel code exists.</p>
+        </statement>
+        <feedback>
+          <p>We don't want the user being able to arbitrarily call any kernel address.</p>
+        </feedback>
+      </choice>
+      <choice correct="yes">
+        <statement>
+          <p>To make a system call the user program must a special number corresponding to the call they are trying to make.</p>
+        </statement>
+        <feedback>
+          <p>Make sure to re-read the part about <em>system-call numbers</em>.</p>
+        </feedback>
+      </choice>
+      <choice correct="no">
+        <statement>
+          <p>A <em>trap</em> is code that the user writes to try to trick the kernel into letting it run privileged instructions.</p>
+        </statement>
+        <feedback>
+          <p>Read again about the <em>trap</em> and <em>return-from-trap</em> hardware instructions and what they do.</p>
+        </feedback>
+      </choice>
+      <choice correct="no">
+        <statement>
+          <p>The <em>trap table</em> contains a listing of all the system calls that are currently executing.</p>
+        </statement>
+        <feedback>
+          <p>No it only contains references to the address where the actual code for the specific system call resides.</p>
+        </feedback>
+      </choice>
+      <choice correct="no">
+        <statement>
+          <p>In order to start the user program and execute <em>main</em>, the operating system issues a <em>return-from-trap</em> instruction, after some initial setup.</p>
+        </statement>
+        <feedback>
+          <p>Take another closer look at Figure 6.2, especially the beginning of the OS@run section.</p>
+        </feedback>
+      </choice>
+    </choices>
+  </exercise>
+  <exercise label="ex-limited-direct-execution-why-start-program-with-return-from-trap">
+    <statement>
+      <p>When the operating system wants to start the user program, it does so by executing a <em>return-from-trap</em> instruction. Why is that, why not a normal function call/jump?</p>
+    </statement>
+    <choice correct="yes">
+      <statement>
+        <p>Because the kernel runs in privileged mode but we need the program to run in user mode. And this instruction is exactly what makes the mode switch.</p>
+      </statement>
+    </choice>
+    <choice correct="no">
+      <statement>
+        <p>No particular reason, we could have used a normal function call/jump.</p>
+      </statement>
+    </choice>
+    <choice correct="no">
+      <statement>
+        <p>No particular reason, we could have used a normal function call/jump.</p>
+      </statement>
+    </choice>
+    <choice correct="no">
+      <statement>
+        <p>That instruction is the only way to jump to a different instruction.</p>
+      </statement>
+      <feedback>
+        <p>Not true, there are typically numerous ways that allow you to navigate to different instruction locations, used in all normal function calls and for if-then-else and while loops.</p>
+      </feedback>
+    </choice>
+  </exercise>
+  <p>Read section 6.3 about switching between processes and how the system can regain control of the CPU. In particular study Figure 6.3 about the process of a context switch.</p>
+  <exercise label="ex-direct-execution-cooperative-approach-principle">
+    <statement>
+      <p>What is the key idea behind the <em>cooperative approach</em> to process switching?</p>
+    </statement>
+    <choices>
+      <choice correct="no">
+        <statement>
+          <p>The operating system expects processes to directly call other processes to give them a chance to run.</p>
+        </statement>
+      </choice>
+      <choice correct="yes">
+        <statement>
+          <p>The operating system expects processes to periodically perform system calls, at which point it may choose to switch to another process.</p>
+        </statement>
+      </choice>
+      <choice correct="no">
+        <statement>
+          <p>The operating system periodically interrupts running processes in order to switch to other processes.</p>
+        </statement>
+        <feedback>
+          <p>When a process is running, there is no direct way for the operating system to interrupt it.</p>
+        </feedback>
+      </choice>
+    </choices>
+  </exercise>
+  <exercise label="ex-direct-execution-non-cooperative-approach">
+    <statement>
+      <p>What is the key mechanism that allows the OS to regain control of the processor in the non-cooperative approach?</p>
+    </statement>
+    <choices>
+      <choice correct="no">
+        <statement>
+          <p>A timer interrupt automatically switches to a different process.</p>
+        </statement>
+      </choice>
+      <choice correct="yes">
+        <statement>
+          <p>A timer interrupt regularly executes a kernel-defined interrupt handler, which may initiate a switch to a different process.</p>
+        </statement>
+      </choice>
+      <choice correct="no">
+        <statement>
+          <p>The user program is expected to call a kernel-defined interrupt handler in order to yield control.</p>
+        </statement>
+        <feedback>
+          <p>No the user program is not in control of this process.</p>
+        </feedback>
+      </choice>
+    </choices>
+  </exercise>
+  <exercise label="ex-direct-execution-timer-init">
+    <statement>
+      <p>When is the timer used in timer interrupts started?</p>
+    </statement>
+    <choices>
+      <choice correct="no">
+        <statement>
+          <p>It automatically starts whenever the computer turns on.</p>
+        </statement>
+      </choice>
+      <choice correct="no">
+        <statement>
+          <p>The kernel starts it before it runs each process.</p>
+        </statement>
+      </choice>
+      <choice correct="yes">
+        <statement>
+          <p>The kernel instructs the hardware to start the timer during the kernel's booting process.</p>
+        </statement>
+      </choice>
+    </choices>
+  </exercise>
+  <exercise label="ex-direct-execution-context-switch">
+    <statement>
+      <p>In order to perform a <em>context switch</em> from process A to process B, the operating system must perform the following steps (need to place in order, and maybe leave out some steps)</p>
+    </statement>
+    <blocks>
+      <block>
+        <p>Store the registers, program counter, stack pointers etc from process A somewhere on the kernel stack for process A.</p>
+      </block>
+      <block>
+        <p>Restore registers, program counter, stack pointers etc from the kernel stack for process B onto the CPU.</p>
+      </block>
+      <block correct="no">
+        <p>Execute a trap instruction.</p>
+      </block>
+      <block>
+        <p>Execute a return-from-trap instruction.</p>
+      </block>
+    </blocks>
+  </exercise>
+  <p>Take a look at the following pieces of code in the <c>xv6-riscv</c> directory:
+  <ul>
+    <li>
+      <p>The <c>kernel/proc.h</c> file contains a <c>struct context</c>. Take a look at the order of fields defined there. This is meant to hold the registers of a process when a context switch happens. Note that it only holds 14 registers.</p>
+    </li>
+    <li>
+      <p>Take a look at <url href="https://en.wikichip.org/wiki/risc-v/registers">this page</url> which lists all the registers in the RISC-V architecture. Look specifically at the API-name column. You should find 17 registers (18 if you included the zero register) that are missing from the <c>context</c> structure above. Make sure you identify which registers those are.</p>
+    </li>
+    <li>You'll find that the t- prefixed and a- prefixed registers are not present in the context switch. If we arrived here as a result of a function call, e.g. a system call, then these t- and a- registers are not guaranteed to be preserved during calls, so the caller would have taken care to store any information they want to preserve from those registers.</li>
+    <li>However if the reason for the context switch was something like a timer interrupt, the user process would not have had the chance to make such a call and preserve those registers. So you might wonder what happens to them. Take a look at the <c>struct trapframe </c> in <c>kernel/proc.h</c> and the <c>uservec:
+</c> section in <c>kernel/trampoline.S</c>. This is the first code that runs when an interrupt occurs, and you will see that it saves all the registers in this trapframe structure.</li>
+    <li>
+      <p>Also look at <c>userret:</c> in <c>kernel/trampoline.S</c>, which is responsible for restoring the registers whenever we return to a process after an interrupt.</p>
+    </li>
+  </ul>
+  </p>
+  <p>Optional reading: Chapter 4 of the <url href="https://xv6-guide.github.io/xv6-riscv-book/Ch4.html">xv6-riscv book</url> outlines the implementation of traps and systems calls in xv6.</p>
+</section>
