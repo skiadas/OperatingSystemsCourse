@@ -390,7 +390,7 @@
           <p>In <c>main()</c>.</p>
         </statement>
       </choice>
-      <choice correct="true">
+      <choice correct="yes">
         <statement>
           <p>Exactly where the <c>fork</c> call happens.</p>
         </statement>
