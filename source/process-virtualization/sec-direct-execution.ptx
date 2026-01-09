@@ -8,18 +8,18 @@
       <p>What are the considerations that the OS needs to keep in mind when setting up time-sharing mechanisms?</p>
     </statement>
     <choices>
-      <choice>
-        <statement correct="yes">
+      <choice correct="yes">
+        <statement>
           <p>It must do so with minimal overhead.</p>
         </statement>
       </choice>
-      <choice>
-        <statement correct="yes">
+      <choice correct="yes">
+        <statement>
           <p>It must be able to regain control from any processes that want to monopolize the CPU.</p>
         </statement>
       </choice>
-      <choice>
-        <statement correct="no">
+      <choice correct="no">
+        <statement>
           <p>It must make sure all processes get an equal time.</p>
         </statement>
         <feedback>
