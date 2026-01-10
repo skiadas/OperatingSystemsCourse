@@ -1,0 +1,328 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<section xml:id="sec-cpu-scheduling" xmlns:xi="http://www.w3.org/2001/XInclude">
+  <title>CPU Scheduling</title>
+  <p>Start by reading the <url href="https://pages.cs.wisc.edu/~remzi/OSTEP/cpu-sched.pdf">CPU Scheduling chapter</url> sections 7.1 and 7.2.</p>
+  <exercise label="ex-cpu-scheduling-workload-assumptions">
+    <statement>
+      <p>This chapter will be making a series of assumptions about the workload required of the system. Select all that apply.</p>
+    </statement>
+    <choices>
+      <choice correct="yes">
+        <statement>
+          <p>All the jobs appear in the system at the same time.</p>
+        </statement>
+      </choice>
+      <choice correct="no">
+        <statement>
+          <p>All the jobs are requested from the same user.</p>
+        </statement>
+        <feedback>
+          <p>No the users don't matter for this book section at all</p>
+        </feedback>
+      </choice>
+      <choice correct="yes">
+        <statement>
+          <p>We know ahead of time how long a process will take to complete.</p>
+        </statement>
+      </choice>
+      <choice correct="no">
+        <statement>
+          <p>All the jobs involve some I/O.</p>
+        </statement>
+        <feedback>
+          <p>In fact the assumption is no I/O.</p>
+        </feedback>
+      </choice>
+      <choice correct="yes">
+        <statement>
+          <p>Jobs are not to be interrupted once they start.</p>
+        </statement>
+      </choice>
+      <choice correct="yes">
+        <statement>
+          <p>Jobs all take the same amount of time to run.</p>
+        </statement>
+      </choice>
+    </choices>
+  </exercise>
+  <exercise label="ex-cpu-scheduling-turnaround-time-example">
+    <statement>
+      <p>Three processes (A, B, C) arrive at the system at a certain point in time. The system is busy at the moment and doesn't start scheduling them until 1 second later. It schedules process B first, which takes 3 seconds to complete. Then it schedules process C, which takes 2 seconds to complete. Lastly it schedules process A, which takes 5 seconds to complete. What are the <em>turnaround times</em> for the three processes?
+        <ul>
+          <li><p>A: <fillin answer="11" mode="number" /></p></li>
+          <li><p>B: <fillin answer="4" mode="number" /></p></li>
+          <li><p>C: <fillin answer="6" mode="number" /></p></li>
+          <li><p>Average: <fillin answer="7" mode="number" /></p></li>
+        </ul>
+      </p>
+    </statement>
+    <evaluation>
+      <evaluate>
+        <test><numcmp use-answer="yes"></numcmp></test>
+      </evaluate>
+      <evaluate>
+        <test><numcmp use-answer="yes" /></test>
+      </evaluate>
+      <evaluate>
+        <test><numcmp use-answer="yes" /></test>
+      </evaluate>
+      <evaluate>
+        <test><numcmp use-answer="yes" /></test>
+      </evaluate>
+    </evaluation>
+  </exercise>
+  <exercise label="ex-cpu-scheduling-turnaround-time-metric-type">
+    <statement>
+      <p>What type of metric is <em>turnaround time</em>?</p>
+    </statement>
+    <choices>
+      <choice correct="no">
+        <statement>
+          <p>A fairness metric.</p>
+        </statement>
+      </choice>
+      <choice correct="yes">
+        <statement>
+          <p>A performance metric.</p>
+        </statement>
+      </choice>
+      <choice correct="no">
+        <statement>
+          <p>A security metric.</p>
+        </statement>
+      </choice>
+    </choices>
+  </exercise>
+  <p>Read section 7.3 about the first-come-first-served scheduling approach.</p>
+  <exercise label="ex-cpu-scheduling-fcfc-problematic-workload">
+    <statement>
+      <p>Which of the following workloads would result in poor average turnaround times?</p>
+    </statement>
+    <choices>
+      <choice correct="yes">
+        <statement>
+          <p>A large job arrives first, followed by a number of small jobs.</p>
+        </statement>
+      </choice>
+      <choice correct="no">
+        <statement>
+          <p>Some small jobs arrive first, followed by large job.</p>
+        </statement>
+      </choice>
+      <choice correct="no">
+        <statement>
+          <p>Many jobs of the same size arrive at once.</p>
+        </statement>
+      </choice>
+    </choices>
+  </exercise>
+  <p>Read section 7.4, about the shortest-job-first scheduling.</p>
+  <exercise label="ex-cpu-scheduling-examples-both-fcfs-and-sjf">
+    <statement>
+      <p>There are four processes, A, B, C, D, coming into the system, arriving at different times (i.e. a process arriving at time 3 can be scheduled at the time slot indexed as 3) and having different running times (number of time slots it will occupy). The turnaround time for a process will be the number of time slots from when it arrived to the system until it is completed. So a process arriving at time 3, scheduled to run at time 4, and taking 3 time slots, would be completed after time slot 6 ends, and so would have a turnaround time of 4 slots (3, 4, 5, 6).</p>
+      <tabular>
+        <row header="yes">
+          <cell>Process</cell>
+          <cell>Arrival time</cell>
+          <cell>Duration</cell>
+        </row>
+        <row>
+          <cell>A</cell>
+          <cell>0</cell>
+          <cell>3</cell>
+        </row>
+        <row>
+          <cell>B</cell>
+          <cell>1</cell>
+          <cell>4</cell>
+        </row>
+        <row>
+          <cell>C</cell>
+          <cell>2</cell>
+          <cell>2</cell>
+        </row>
+        <row>
+          <cell>D</cell>
+          <cell>4</cell>
+          <cell>1</cell>
+        </row>
+      </tabular>
+      <p>
+        For each scheduling approach list, with no spaces, the jobs scheduled for each time slice (with a - if there is any slice where no job is scheduled). So you might end up with a sequence of letters like <c>AAADCCBBBB</c> (imaginary example).
+        <ul>
+          <li>
+            <p>For a FIFO/FCFS scheduling, the resulting schedule would be <fillin answer="AAABBBBCCD" mode="string" /> and the corresponding average turnaround time is <fillin answer="5.5" mode="number" />.</p>
+          </li>
+          <li>
+            <p>For a SJF scheduling, the resulting schedule would be <fillin answer="AAACCDBBBB" mode="string" /> and the corresponding average turnaround time is <fillin answer="4.25" mode="number" />.</p>
+          </li>
+        </ul>
+      </p>
+    </statement>
+    <evaluation>
+      <evaluate>
+        <test><strcmp use-answer="yes"></strcmp></test>
+      </evaluate>
+      <evaluate>
+        <test><numcmp use-answer="yes"></numcmp></test>
+      </evaluate>
+      <evaluate>
+        <test><strcmp use-answer="yes"></strcmp></test>
+      </evaluate>
+      <evaluate>
+        <test><numcmp use-answer="yes"></numcmp></test>
+      </evaluate>
+    </evaluation>
+  </exercise>
+  <p>Read section 7.5, about the shortest-to-completion-first scheduling approach, and relaxing the "job runs to completion" assumption.</p>
+  <exercise label="ex-cpu-scheduling-stcf-example">
+    <statement>
+      <p>We are scheduling four processes, A, B, C, D, coming into the system, arriving at different times and having different running times, and we schedule one process to run during each time slice (but we can preempt / interrupt processes). We will compare SJF (without preempting) and STCF (with preempting).</p>
+      <tabular>
+        <row header="yes">
+          <cell>Process</cell>
+          <cell>Arrival time</cell>
+          <cell>Duration</cell>
+        </row>
+        <row>
+          <cell>A</cell>
+          <cell>0</cell>
+          <cell>6</cell>
+        </row>
+        <row>
+          <cell>B</cell>
+          <cell>1</cell>
+          <cell>4</cell>
+        </row>
+        <row>
+          <cell>C</cell>
+          <cell>1</cell>
+          <cell>3</cell>
+        </row>
+        <row>
+          <cell>D</cell>
+          <cell>2</cell>
+          <cell>1</cell>
+        </row>
+      </tabular>
+      <p>List, with no spaces, the jobs scheduled for each time slice (with a - if there is any slice where no job is scheduled). So you might end up with a sequence of letters like <c>AAADCCBBBB</c> (imaginary example).
+      <ul>
+        <li>
+          <p>For SJF scheduling (so this one cannot preempt the processes), the resulting schedule would be <fillin answer="AAAAAADCCCBBBB" mode="string" /> and the corresponding average turnaround time is <fillin answer="8" mode="number" />.</p>
+        </li>
+        <li>
+          <p>For STCF scheduling, the resulting schedule would be <fillin answer="ACDCCBBBBAAAAA" mode="string" /> and the corresponding average turnaround time is <fillin answer="6.75" mode="number" />.</p>
+        </li>
+      </ul>
+      </p>
+    </statement>
+    <evaluation>
+      <evaluate>
+        <test><strcmp use-answer="yes"></strcmp></test>
+      </evaluate>
+      <evaluate>
+        <test><numcmp use-answer="yes"></numcmp></test>
+      </evaluate>
+      <evaluate>
+        <test><strcmp use-answer="yes"></strcmp></test>
+      </evaluate>
+      <evaluate>
+        <test><numcmp use-answer="yes"></numcmp></test>
+      </evaluate>
+    </evaluation>
+  </exercise>
+  <p>
+    Read sections 7.6 and 7.7 about the <em>response time</em> metric and the <em>round robin</em> scheduling approach.
+  </p>
+  <exercise label="ex-cpu-scheduling-round-robin-example">
+    <statement>
+      <p>We are scheduling four processes, A, B, C, D, coming into the system, arriving at different times and having different running times, and we schedule one process to run during each time slice (but we can preempt / interrupt processes). We will compute both average turnaround like before, but also average response time. We will consider a process to have been "responded" after its first time slice completes. For example a process that arrived at time 3, and scheduled for the first time at time 4, would have a response time of 2.</p>
+      <tabular>
+        <row header="yes">
+          <cell>Process</cell>
+          <cell>Arrival time</cell>
+          <cell>Duration</cell>
+        </row>
+        <row>
+          <cell>A</cell>
+          <cell>0</cell>
+          <cell>6</cell>
+        </row>
+        <row>
+          <cell>B</cell>
+          <cell>1</cell>
+          <cell>4</cell>
+        </row>
+        <row>
+          <cell>C</cell>
+          <cell>1</cell>
+          <cell>3</cell>
+        </row>
+        <row>
+          <cell>D</cell>
+          <cell>2</cell>
+          <cell>1</cell>
+        </row>
+      </tabular>
+      <p>Fill the table for SJF, STCF and round-robin (RR). Some answers will match the previous parts.
+        <tabular>
+          <row header="yes">
+            <cell>Approach</cell>
+            <cell>SCHED</cell>
+            <cell>AVGTURN</cell>
+            <cell>AVGRESP</cell>
+          </row>
+          <row>
+            <cell>SJF</cell>
+            <cell><fillin answer="AAAAAADCCCBBBB" mode="string" /></cell>
+            <cell><fillin answer="8" mode="number" width="3" /></cell>
+            <cell><fillin answer="5.75" mode="number" width="3" /></cell>
+          </row>
+          <row>
+            <cell>STCF</cell>
+            <cell><fillin answer="ACDCCBBBBAAAAA" mode="string" /></cell>
+            <cell><fillin answer="6.75" mode="number" width="3" /></cell>
+            <cell><fillin answer="4" mode="number" width="3" /></cell>
+          </row>
+          <row>
+            <cell>RR</cell>
+            <cell><fillin answer="ABCDABCABCABAA" mode="string" /></cell>
+            <cell><fillin answer="9" mode="number" width="3" /></cell>
+            <cell><fillin answer="1.5" mode="number" width="3" /></cell>
+          </row>
+        </tabular>
+      </p>
+    </statement>
+    <evaluation>
+      <evaluate>
+        <test><strcmp use-answer="yes"></strcmp></test>
+      </evaluate>
+      <evaluate>
+        <test><numcmp use-answer="yes"></numcmp></test>
+      </evaluate>
+      <evaluate>
+        <test><numcmp use-answer="yes"></numcmp></test>
+      </evaluate>
+      <evaluate>
+        <test><strcmp use-answer="yes"></strcmp></test>
+      </evaluate>
+      <evaluate>
+        <test><numcmp use-answer="yes"></numcmp></test>
+      </evaluate>
+      <evaluate>
+        <test><numcmp use-answer="yes"></numcmp></test>
+      </evaluate>
+      <evaluate>
+        <test><strcmp use-answer="yes"></strcmp></test>
+      </evaluate>
+      <evaluate>
+        <test><numcmp use-answer="yes"></numcmp></test>
+      </evaluate>
+      <evaluate>
+        <test><numcmp use-answer="yes"></numcmp></test>
+      </evaluate>
+    </evaluation>
+  </exercise>
+  <p>Read the rest of chapter.</p>
+</section>
