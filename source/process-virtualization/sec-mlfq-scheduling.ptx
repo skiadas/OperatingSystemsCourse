@@ -1,0 +1,123 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<section xml:id="sec-mlfq-scheduling" xmlns:xi="http://www.w3.org/2001/XInclude">
+  <title>MLFQ Scheduling</title>
+  <p>Start by reading the <url href="https://pages.cs.wisc.edu/~remzi/OSTEP/cpu-sched-mlfq.pdf">MLFQ Scheduling chapter</url> section 8.1.</p> about the general idea behind the multi-level feedback queue scheduler.
+  <exercise label="ex-mlfq-scheduling-key-ideas">
+    <statement>
+      <p>If we have a multi-level feedback queue scheduler with two queues, a high priority one (H) and lower priority one (L). Which of the following might allow a job that is in the L queue to execute?</p>
+    </statement>
+    <choices>
+      <choice correct="no">
+        <statement>
+          <p>Nothing special needed, all jobs will get a chance to run, similar to a round-robin approach.</p>
+        </statement>
+      </choice>
+      <choice correct="yes">
+        <statement>
+          <p>There are no jobs in the H queue.</p>
+        </statement>
+      </choice>
+      <choice correct="no">
+        <statement>
+          <p>There are jobs in the H queue but some are currently blocked waiting for I/O.</p>
+        </statement>
+      </choice>
+      <choice correct="yes">
+        <statement>
+          <p>There are jobs in the H queue and all are currently blocked waiting for I/O.</p>
+        </statement>
+      </choice>
+    </choices>
+  </exercise>
+  <p>Read section 8.2, which describes a first attempt at deciding how when to change the priority of processes.</p>
+  <exercise label="ex-mlfq-scheduling-allotment">
+    <statement>
+      <p>What does a process' <em>allotment</em> represent?</p>
+    </statement>
+    <choices multiple-correct="yes">
+      <choice correct="no">
+        <statement>
+          <p>The maximum amount of time that the process is allowed to run for.</p>
+        </statement>
+      </choice>
+      <choice correct="yes">
+        <statement>
+          <p>The amount of time that the process is allowed to run at a given priority level for before we lower its priority.</p>
+        </statement>
+      </choice>
+      <choice correct="no">
+        <statement>
+          <p>The importance of the process to the system.</p>
+        </statement>
+      </choice>
+      <choice correct="no">
+        <statement>
+          <p>The amount of memory the process is allocated.</p>
+        </statement>
+      </choice>
+    </choices>
+  </exercise>
+  <exercise label="ex-mlfq-scheduling-no-way-up">
+    <statement correct="yes">
+      <p>True or False: With the rules as stated up to the end of section 8.2, a process that starts at a priority queue can never move to a higher priority queue.</p>
+    </statement>
+  </exercise>
+  <exercise label="ex-mlfq-scheduling-higher-priority-queues-1">
+    <statement correct="no">
+      <p>True or False: The higher priority queues are intended for processes that need more of the CPU's time.</p>
+    </statement>
+  </exercise>
+  <exercise label="ex-mlfq-scheduling-higher-priority-queues-2">
+    <statement correct="yes">
+      <p>True or False: The higher priority queues are intended for interactive processes that block a lot but need to respond to users.</p>
+    </statement>
+  </exercise>
+  <exercise label="ex-mlfq-scheduling-higher-starvation">
+    <statement>
+      <p>What is the problem of <em>starvation</em> in CPU scheduling?</p>
+    </statement>
+    <choices multiple-correct="yes">
+      <choice correct="no">
+        <statement>
+          <p>If there are too many processes, there might not be enough memory available for a process.</p>
+        </statement>
+      </choice>
+      <choice correct="yes">
+        <statement>
+          <p>If there are too many processes of higher priority, a process may not get to run at all (or get extremely little time).</p>
+        </statement>
+      </choice>
+      <choice correct="no">
+        <statement>
+          <p>It is the situation when multiple processes try to run at the same time.</p>
+        </statement>
+      </choice>
+    </choices>
+  </exercise>
+  <p>Read section 8.3, about the next attempt at adjusting process priority, and the so-called priority boost.</p>
+  <exercise label="ex-mlfq-scheduling-priority-boost">
+    <statement>
+      <p>What happens during the <em>priority boost</em></p>
+    </statement>
+    <choices>
+      <choice correct="no">
+        <statement>
+          <p>All the processes in the system move to the next highest priority queue from the one they are in.</p>
+        </statement>
+      </choice>
+      <choice correct="no">
+        <statement>
+          <p>A random process from a lower priority queue is moved to the topmost queue.</p>
+        </statement>
+      </choice>
+      <choice correct="yes">
+        <statement>
+          <p>All processes move to the highest priority queue.</p>
+        </statement>
+      </choice>
+    </choices>
+  </exercise>
+  <p>Read section 8.4, about the improved approach to deciding when to change process priority.</p>
+  <p>Read sections 8.5 and 8.6. Make sure to put together the 5 rules that make the MLFQ system, and digest what each of them does (and why they are all important).</p>
+</section>
