@@ -1,0 +1,180 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<section xml:id="sec-vm-address-space" xmlns:xi="http://www.w3.org/2001/XInclude">
+  <title>Address Spaces and the Memory API</title>
+  <p>This reading consists of 2 brief chapters. Chapter 13 introduces the concept of an address space, and Chapter 14 discusses the basic memory allocation API available to user processes.</p>
+  <p>Start by reading the <url href="https://pages.cs.wisc.edu/~remzi/OSTEP/vm-intro.pdf">Address Space</url> chapter start (sections 13.1, 13.2).</p>
+  <exercise label="ex-time-sharing-early-problems">
+    <statement>
+      <p>According to the reading what was a key problem with the early attempts at time-sharing?</p>
+    </statement>
+    <choices multiple-correct="yes">
+      <choice correct="no">
+        <statement>
+          <p>There was a desire for multiple users to interact with the machines at the same time</p>
+        </statement>
+        <feedback>
+          <p>No this was actually the motivation from moving away from batch processing and towards time-sharing</p>
+        </feedback>
+      </choice>
+      <choice correct="yes">
+        <statement>
+          <p>Early approaches required saving the entire memory on disk on each switch, which was prohibitively time-consuming.</p>
+        </statement>
+      </choice>
+      <choice correct="no">
+        <statement>
+          <p>Connecting the users to the machines was not easy to do.</p>
+        </statement>
+      </choice>
+      <choice correct="no">
+        <statement>
+          <p>The processors of the time were too slow.</p>
+        </statement>
+      </choice>
+      <choice correct="no">
+        <statement>
+          <p>The protection of early systems could not be established.</p>
+        </statement>
+        <feedback>
+          <p>While protection was an important issue to consider, it wasn't a main limitation of the systems at the time.</p>
+        </feedback>
+      </choice>
+    </choices>
+  </exercise>
+  <p>Read section 13.1 where the concept of <em>address space</em> is defined.</p>
+  <exercise label="ex-vm-address-space-def">
+    <statement>
+      <p>What does the <em>address space</em> abstraction refer to?</p>
+    </statement>
+    <choices multiple-correct="yes">
+      <choice correct="yes">
+        <statement>
+          <p>It is a representation of the memory available to the running process, without revealing how this space is situated in the physical memory.</p>
+        </statement>
+      </choice>
+      <choice correct="no">
+        <statement>
+          <p>It is the mapping between virtual addresses and physical memory addresses.</p>
+        </statement>
+        <feedback>
+          <p>While this is the key mechanism by which this is achieved, it is not its definition.</p>
+        </feedback>
+      </choice>
+      <choice correct="no">
+        <statement>
+          <p>It is the locations in physical memory where the program code is at.</p>
+        </statement>
+      </choice>
+      <choice correct="no">
+        <statement>
+          <p>It refers to the fact that the heap and the stack grow in opposite directions.</p>
+        </statement>
+      </choice>
+    </choices>
+  </exercise>
+  <p>Read section 13.4 about the goals of memory virtualization.</p>
+  <exercise label="ex-vm-goals-of-virtualization">
+    <statement>
+      <p>Which of the following are key goals of a memory virtualization process?</p>
+    </statement>
+    <choices multiple-correct="yes">
+      <choice correct="yes">
+        <statement>
+          <p>To protect the OS code from the various user processes.</p>
+        </statement>
+      </choice>
+      <choice correct="yes">
+        <statement>
+          <p>To make sure programs can still be run quickly with minimum overhead from the virtualization process.</p>
+        </statement>
+      </choice>
+      <choice correct="no">
+        <statement>
+          <p>To make sure processes can use as much memory as they would like.</p>
+        </statement>
+        <feedback>
+          <p>This was not one of the stated goals.</p>
+        </feedback>
+      </choice>
+      <choice correct="yes">
+        <statement>
+          <p>The implementation should be completely hidden from the user processes.</p>
+        </statement>
+      </choice>
+    </choices>
+  </exercise>
+  <p>Read the summary section 13.5.</p>
+  <exercise label="ex-vm-address-space-in-xv6">
+    <statement>
+      <p>The aside titled "Every address you see is virtual" contains a small program that shows you the virtual memory addresses that the system has assigned to your program. Add this to a file called <c>mem.c</c> inside the <c>user</c> directory of your <c>xv6-riscv</c> folder, and add a <c>%U/_mem\</c> line in the appropriate section of the Makefile, to have your program compiled and available. You will to replace the <c>#include</c> provided in the example by ones appropriate for our OS, use the ones from <c>ls.c</c>. Then build and run our OS and run the program in there.</p>
+      <p>Based on that output, and using a 4-byte notation like <c>0x3f44</c> (use lowercase letters) as all the addresses only have only 4 non-zero bytes, then you should be seeing:
+      <ul>
+        <li>
+          <p>The code for main was placed at address <fillin answer="0x0000" />.</p>
+        </li>
+        <li>
+          <p>Our heap-allocated value was placed at address <fillin answer="0x4010" />.</p>
+        </li>
+        <li>
+          <p>The local variable <c>x</c> was placed at address <fillin answer="0x3fbc" />. It takes up 4 bytes as an int, and it is the only thing in our stack, hence our stack ends at address <fillin answer="0x3fc0" />.</p>
+        </li>
+        <li>
+          <p>If another local int variable <c>y</c> was defined after <c>x</c>, it would be placed at address <fillin answer="0x3fb8" />.</p>
+        </li>
+      </ul>
+      </p>
+    </statement>
+  </exercise>
+  <p>Read section 14.1 about the stack and the heap.</p>
+  <exercise label="ex-vm-stack-heap-true-false">
+    <statement correct="no">
+      <p>True or False: memory allocated to a function in the stack is available to the user after the function returns.</p>
+    </statement>
+  </exercise>
+  <p>Read section 14.2 about the malloc call.</p>
+  <exercise label="ex-vm-malloc-return">
+    <statement correct="no">
+      <p>True or False: <c>malloc</c> return 0 if it successed in allocating the requested space.</p>
+    </statement>
+  </exercise>
+  <exercise label="ex-vm-sizeof">
+    <statement correct="yes">
+      <p>True or False: <c>sizeof</c> is resolved at compile time, not run time.</p>
+    </statement>
+  </exercise>
+  <p>Read section 14.3 about <c>free</c> and section 14.4 about common errors</p>
+  <exercise label="ex-vm-common-errors-memory-api">
+    <statement>
+      <p>Which of the following are common errors when programming with the memory API?</p>
+    </statement>
+    <choices multiple-correct="yes">
+      <choice correct="yes">
+        <statement>
+          <p>Allocating less space than needed.</p>
+        </statement>
+      </choice>
+      <choice correct="no">
+        <statement>
+          <p>Not using memory that you allocated.</p>
+        </statement>
+      </choice>
+      <choice correct="yes">
+        <statement>
+          <p>Writing to memory without allocating it first.</p>
+        </statement>
+      </choice>
+      <choice correct="yes">
+        <statement>
+          <p>Accessing memory after you freed it.</p>
+        </statement>
+      </choice>
+      <choice correct="yes">
+        <statement>
+          <p>Freeing a memory that you already had freed.</p>
+        </statement>
+      </choice>
+    </choices>
+  </exercise>
+  <p>Read the remaining sections: 14.5 about the support provided by the OS, 14.6 about important alternatives to <c>malloc</c>, and 14.7 with a brief summary.</p>
+</section>
