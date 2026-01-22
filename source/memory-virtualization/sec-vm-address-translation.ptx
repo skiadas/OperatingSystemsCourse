@@ -1,0 +1,143 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<section xml:id="sec-vm-address-translation" xmlns:xi="http://www.w3.org/2001/XInclude">
+  <title>Address Translation</title>
+  <p>This reading covers chapter 15 on the details of address translation.</p>
+  <p>Start by reading the <url href="https://pages.cs.wisc.edu/~remzi/OSTEP/vm-mechanism.pdf">Address Translation</url> chapter start (introductory discussion, 15.1, 15.2).</p>
+  <exercise label="ex-vm-address-translation-assumptions">
+    <statement>
+      <p>Which of the following are assumptions we will be making in this section about the user address spaces?</p>
+    </statement>
+    <choices multiple-correct="yes">
+      <choice correct="yes">
+        <statement>
+          <p>All processes will need the same amount of space, so all address spaces are of the same size.</p>
+        </statement>
+      </choice>
+      <choice correct="yes">
+        <statement>
+          <p>All the needed address spaces can collectively fit in the physical memory.</p>
+        </statement>
+      </choice>
+      <choice correct="no">
+        <statement>
+          <p>Only one process can be in memory at a time.</p>
+        </statement>
+      </choice>
+      <choice correct="yes">
+        <statement>
+          <p>We must place each entire address space in a single contiguous location.</p>
+        </statement>
+      </choice>
+      <choice correct="no">
+        <statement>
+          <p>All requests for address space are known ahead of time.</p>
+        </statement>
+      </choice>
+    </choices>
+  </exercise>
+  <exercise>
+    <statement>
+      <p>In the example memory layout described in Figure 15.2, how many user processes in total can the system support, in memory at the same time? <fillin characters="5" answer="3" mode="number" /></p>
+    </statement>
+    <evaluation>
+      <evaluate>
+        <test><numcmp use-answer="yes"></numcmp></test>
+      </evaluate>
+    </evaluation>
+  </exercise>
+  <p>Read section 15.3 about hardware-based dynamic relocation.</p>
+  <exercise label="ex-vm-address-translation-base-bounds-math-1">
+    <statement>
+      <p>A process address space is specified using the base-bounds setup with base address at <c>0x1000</c> and a bounds value of <c>0x2000</c> (with the approach that it indicates the increment from the base, i.e. it's the highest address of the address space). Then the virtual address <c>0x10ef</c> in the process address space will correspond to physical address <fillin answer="0x2ef" mode="string" />
+      </p>
+    </statement>
+    <evaluation>
+      <evaluate>
+        <test><strcmp use-answer="yes"></strcmp></test>
+      </evaluate>
+    </evaluation>
+  </exercise>
+  <exercise label="ex-vm-address-translation-base-bounds-math-2">
+    <statement>
+      <p>A process address space is specified using the base-bounds setup with base address at <c>0x1000</c> and a bounds value of <c>0x2000</c> (with the approach that it indicates the increment from the base, i.e. it's the highest address of the address space). Which of the following are acceptable address space base-bounds values for other processes?
+      </p>
+    </statement>
+    <choices multiple-correct="yes">
+      <choice correct="no">
+        <statement>
+          <p>base of <c>0x2000</c> and bounds of <c>0x1000</c>.</p>
+        </statement>
+      </choice>
+      <choice correct="no">
+        <statement>
+          <p>base of <c>0x2000</c> and bounds of <c>0x1000</c>.</p>
+        </statement>
+      </choice>
+      <choice correct="yes">
+        <statement>
+          <p>base of <c>0x3000</c> and bounds of <c>0x2000</c>.</p>
+        </statement>
+      </choice>
+      <choice correct="no">
+        <statement>
+          <p>base of <c>0x0000</c> and bounds of <c>0x2000</c>.</p>
+        </statement>
+      </choice>
+
+    </choices>
+  </exercise>
+  <p>Read section 15.4, summarizing the needed hardware support.</p>
+  <exercise label="ex-vm-address-translation-hardware-support-tf-1">
+    <statement correct="yes">
+      <p>True or False: The base and bounds registers can only be set when in priviledged mode</p>
+    </statement>
+  </exercise>
+  <exercise label="ex-vm-address-translation-hardware-support-tf-2">
+    <statement correct="yes">
+      <p>True or False: If a user process tries to access memory outside of its bounds, an exception is raised.</p>
+    </statement>
+  </exercise>
+  <exercise label="ex-vm-address-translation-hardware-support-tf-3">
+    <statement correct="no">
+      <p>True or False: Translating virtual memory using base-bounds is an expensive process.</p>
+    </statement>
+  </exercise>
+  <p>Read section 15.5, about the responsibilities of the operating system.</p>
+  <exercise label="ex-vm-address-translation-os-duties">
+    <statement>
+      <p>Which of the following are the responsibilities of the OS regarding address translation?</p>
+    </statement>
+    <choices>
+      <choice correct="yes">
+        <statement>
+          <p>Finding appropriate space in memory for a new process.</p>
+        </statement>
+      </choice>
+      <choice correct="no">
+        <statement>
+          <p>Translating every address that appears in the user program to a corresponding physical address.</p>
+        </statement>
+      </choice>
+      <choice correct="yes">
+        <statement>
+          <p>Set the base and bounds registers at every context switch.</p>
+        </statement>
+      </choice>
+      <choice correct="yes">
+        <statement>
+          <p>Provide code to run when a process attempts to access out of its bounds.</p>
+        </statement>
+      </choice>
+      <choice correct="no">
+        <statement>
+          <p>Make sure that the user code does not reference addresses outside of its address space.</p>
+        </statement>
+        <feedback>
+          <p>No the OS must simply provide a mechanism to handle the exception when the user program tries to do this.</p>
+        </feedback>
+      </choice>
+    </choices>
+  </exercise>
+  <p>Read the summary section 15.6.</p>
+</section>

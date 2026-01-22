@@ -111,20 +111,37 @@
       <p>Based on that output, and using a 4-byte notation like <c>0x3f44</c> (use lowercase letters) as all the addresses only have only 4 non-zero bytes, then you should be seeing:
       <ul>
         <li>
-          <p>The code for main was placed at address <fillin answer="0x0000" />.</p>
+          <p>The code for main was placed at address <fillin answer="0x0000" mode="string" />.</p>
         </li>
         <li>
-          <p>Our heap-allocated value was placed at address <fillin answer="0x4010" />.</p>
+          <p>Our heap-allocated value was placed at address <fillin answer="0x4010" mode="string" />.</p>
         </li>
         <li>
-          <p>The local variable <c>x</c> was placed at address <fillin answer="0x3fbc" />. It takes up 4 bytes as an int, and it is the only thing in our stack, hence our stack ends at address <fillin answer="0x3fc0" />.</p>
+          <p>The local variable <c>x</c> was placed at address <fillin answer="0x3fbc" mode="string" />. It takes up 4 bytes as an int, and it is the only thing in our stack, hence our stack ends at address <fillin answer="0x3fc0" mode="string" />.</p>
         </li>
         <li>
-          <p>If another local int variable <c>y</c> was defined after <c>x</c>, it would be placed at address <fillin answer="0x3fb8" />.</p>
+          <p>If another local int variable <c>y</c> was defined after <c>x</c>, it would be placed at address <fillin answer="0x3fb8" mode="string" />.</p>
         </li>
       </ul>
       </p>
     </statement>
+    <evaluation>
+      <evaluate>
+        <test><strcmp use-answer="yes"></strcmp></test>
+      </evaluate>
+      <evaluate>
+        <test><strcmp use-answer="yes"></strcmp></test>
+      </evaluate>
+      <evaluate>
+        <test><strcmp use-answer="yes"></strcmp></test>
+      </evaluate>
+      <evaluate>
+        <test><strcmp use-answer="yes"></strcmp></test>
+      </evaluate>
+      <evaluate>
+        <test><strcmp use-answer="yes"></strcmp></test>
+      </evaluate>
+    </evaluation>
   </exercise>
   <p>Read section 14.1 about the stack and the heap.</p>
   <exercise label="ex-vm-stack-heap-true-false">
