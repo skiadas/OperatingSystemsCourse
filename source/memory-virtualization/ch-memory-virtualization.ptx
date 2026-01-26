@@ -10,5 +10,6 @@
   <!-- include sections -->
   <xi:include href="sec-vm-address-space.ptx" />
   <xi:include href="sec-vm-address-translation.ptx" />
+  <xi:include href="sec-vm-segmentation-free-space-management.ptx" />
 
 </chapter>

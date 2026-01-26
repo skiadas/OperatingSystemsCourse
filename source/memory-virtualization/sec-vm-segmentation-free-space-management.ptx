@@ -1,0 +1,106 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<section xml:id="sec-vm-segmentation-free-space-management" xmlns:xi="http://www.w3.org/2001/XInclude">
+  <title>Segmentation and Free Space management</title>
+  <p>This reading consists of 2 chapters. Chapter 16 discusses the <em>segmentation</em> approach to virtual memory management, while Chapter 17 discusses issues related to the system's management of the free memory space.</p>
+  <p>Start by reading the <url href="https://pages.cs.wisc.edu/~remzi/OSTEP/vm-segmentation.pdf">Segmentation</url> chapter start section 16.1.</p>
+  <exercise label="ex-segmentation-purpose">
+    <statement>
+      <p>What is the problem that segmentation attempts to solve?</p>
+    </statement>
+    <choices multiple-correct="no">
+      <choice correct="no">
+        <statement>
+          <p>The memory needed by a process may be too much to fit within the physical memory of the system.</p>
+        </statement>
+      </choice>
+      <choice correct="no">
+        <statement>
+          <p>Many processes need to use the memory at the same time.</p>
+        </statement>
+      </choice>
+      <choice correct="yes">
+        <statement>
+          <p>Large parts of a process address space go unused and allocating space for them is wasteful.</p>
+        </statement>
+      </choice>
+    </choices>
+  </exercise>
+  <exercise label="ex-segmentation-bounds-size">
+    <statement correct="no">
+      <p>True or False: All segments must have different Base addresses, and must have the same bounds/size.</p>
+    </statement>
+  </exercise>
+  <exercise label="ex-segmentation-translation">
+    <statement>
+      <p>In a particular process the heap segment is set to start, in the address space, on virtual address <c>0x100000</c> (hexadecimal location), and it is supposed to map, as a segment, to physical memory <c>0x45f100</c> and with a bounds of 2048 bytes (<c>0x800</c> in hex). Then:</p>
+      <p>Virtual address <c>0x1002fe</c> will correspond to actual address <fillin answer="0x45f3fe" mode="string" /></p>
+      <p>The highest virtual address that the heap goes to is <fillin answer="0x45f900" mode="string" /></p>
+    </statement>
+    <evaluation>
+      <evaluate>
+        <test><strcmp use-answer="yes"></strcmp></test>
+      </evaluate>
+      <evaluate>
+        <test><strcmp use-answer="yes"></strcmp></test>
+      </evaluate>
+    </evaluation>
+  </exercise>
+  <p>Read section 16.2. Describes a standard way of dividing the address space into segments.</p>
+  <p>Read sections 16.3 and 16.4. These describe enhanced information we record in segment tables, and why.</p>
+  <exercise label="ex-segmentation-protection-bits">
+    <statement>
+      <p>Which of the following are the benefits of using protection bits in the segment table?</p>
+    </statement>
+    <choices>
+      <choice correct="no">
+        <statement>
+          <p>We can use the available memory more effectively.</p>
+        </statement>
+      </choice>
+      <choice correct="no">
+        <statement>
+          <p>We can use it to deal with the fact that the stack grows on the opposite direction.</p>
+        </statement>
+      </choice>
+      <choice correct="yes">
+        <statement>
+          <p>We can use it to share code between different processes.</p>
+        </statement>
+      </choice>
+    </choices>
+  </exercise>
+  <p>Read section 16.6, about the support needed by the OS.</p>
+  <exercise label="ex-segmentation-os-concerns">
+    <statement>
+      <p>What are the key concerns that the OS must manage in order to implement segmentation?</p>
+    </statement>
+    <choices multiple-correct="yes">
+      <choice correct="yes">
+        <statement>
+          <p>Setting up the segmentation tables on each context switch.</p>
+        </statement>
+      </choice>
+      <choice correct="yes">
+        <statement>
+          <p>Handle requests to grow segments beyond their original limits.</p>
+        </statement>
+      </choice>
+      <choice correct="yes">
+        <statement>
+          <p>Manage the free space in physical memory.</p>
+        </statement>
+      </choice>
+    </choices>
+  </exercise>
+  <p>Read 16.7, summary.</p>
+  <p>Read sections 17.1 and 172. Key things to pick up:
+    <ul>
+      <li>What are the "splitting" and "coalescing" actions?</li>
+      <li>What is the purpose of the "header"? What information is stored in it?</li>
+      <li>How does the allocator manage to keep track of the "free list" without using any extra memory?</li>
+    </ul>
+  </p>
+  <p>Read section 17.3, about different strategies used in deciding how to pick a chunk to allocate next.</p>
+  <p>Optional reading: 17.4, 17.5</p>
+</section>
