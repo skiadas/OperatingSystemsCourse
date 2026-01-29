@@ -1,0 +1,126 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<section xml:id="sec-vm-paging" xmlns:xi="http://www.w3.org/2001/XInclude">
+  <title>Paging</title>
+  <p>Start by reading the <url href="https://pages.cs.wisc.edu/~remzi/OSTEP/vm-paging.pdf">Paging: Introduction</url> chapter, intro and section 18.1.</p>
+  <exercise label="ex-paging-what-are-page-frames">
+    <statement>
+      <p>What are page frames?</p>
+    </statement>
+    <choices>
+      <choice correct="no">
+        <statement>
+          <p>The start and end of the different segments of the address space.</p>
+        </statement>
+      </choice>
+      <choice correct="no">
+        <statement>
+          <p>Fixed-sized units in which we divide the address space of a process.</p>
+        </statement>
+      </choice>
+      <choice correct="yes">
+        <statement>
+          <p>Fixed-sized units in which we divide the physical memory.</p>
+        </statement>
+      </choice>
+    </choices>
+  </exercise>
+  <exercise label="ex-paging-math">
+    <statement>
+      <p>If we have an address space of size <m>2^{12} = 4096</m> bytes, to be mapped via paging into a physical memory of size <m>2^{16} = 65536</m> bytes and we want to use pages of size <m>2^{8} = 256</m> bytes, then (provide the final numbers):
+      <ul>
+        <li>
+          <p>We would need to use the first <fillin characters="2" mode="number" answer="4" /> bits of an address as the VPN (virtual page number) and the remaining bits for the offset.</p>
+        </li>
+        <li><p>This would result in <fillin characters="3" mode="number" answer="16" /> pages in the address space.</p></li>
+        <li>
+          <p>And there would be <fillin characters="4" mode="number" answer="256" /> page frames in physical memory.</p>
+        </li>
+        <li>
+          <p>The virtual address 1530 (12bit-binary <c>010111111010</c>) is in page number <fillin characters="2" mode="number" answer="5" /> and offset <fillin characters="5" mode="number" answer="250" />. If this page were mapped to physical frame number 20 then the corresponding physical address (in pure number form) would be <fillin characters="6" mode="number" answer="5370" />.</p>
+        </li>
+      </ul></p>
+    </statement>
+    <evaluation>
+      <evaluate>
+        <test><numcmp use-answer="yes"></numcmp></test>
+      </evaluate>
+      <evaluate>
+        <test><numcmp use-answer="yes"></numcmp></test>
+      </evaluate>
+      <evaluate>
+        <test><numcmp use-answer="yes"></numcmp></test>
+      </evaluate>
+      <evaluate>
+        <test><numcmp use-answer="yes"></numcmp></test>
+      </evaluate>
+      <evaluate>
+        <test><numcmp use-answer="yes"></numcmp></test>
+      </evaluate>
+      <evaluate>
+        <test><numcmp use-answer="yes"></numcmp></test>
+      </evaluate>
+    </evaluation>
+  </exercise>
+  <exercise label="ex-paging-offset">
+    <statement correct="yes">
+      <p>True or False: The offset of a virtual address is the same as the offset of the corresponding physical address.</p>
+    </statement>
+  </exercise>
+  <p>Read sections 18.2, 18.3</p>
+  <exercise label="ex-paging-where-page-table">
+    <statement>
+      <p>Where is the page table for a process stored?</p>
+    </statement>
+    <choices>
+      <choice correct="no">
+        <statement>
+          <p>In dedicated registers</p>
+        </statement>
+      </choice>
+      <choice correct="no">
+        <statement>
+          <p>In the MMU</p>
+        </statement>
+      </choice>
+      <choice correct="yes">
+        <statement>
+          <p>In memory that the OS manages.</p>
+        </statement>
+      </choice>
+      <choice correct="no">
+        <statement>
+          <p>In memory that the process manages.</p>
+        </statement>
+      </choice>
+    </choices>
+  </exercise>
+  <exercise label="ex-paging-page-table-bits">
+    <statement>
+      <p>The page table stores bits with various meanings. Match each bit to its use.</p>
+    </statement>
+    <cardsort>
+      <match>
+          <premise order="4">valid bit</premise>
+          <response>Used to mark that the page isn't being mapped at the moment.</response>
+      </match>
+      <match>
+          <premise order="3">protection bits</premise>
+          <response>used to indicate what access the page allows (read/write/execute)</response>
+      </match>
+      <match>
+          <premise order="1">present bit</premise>
+          <response>Used to indicate if the page is actually in physical memory and not on disc.</response>
+      </match>
+      <match>
+          <premise order="2">dirty bit</premise>
+          <response>Indicates whether the page has been modified since loaded in memory.</response>
+      </match>
+      <match>
+          <premise order="5">reference bit</premise>
+          <response>Used to keep track of how many times a page has been accessed.</response>
+      </match>
+  </cardsort>
+  </exercise>
+  <p>Read section 18.4. Skim section 18.5. Read 18.6 summary.</p>
+</section>
