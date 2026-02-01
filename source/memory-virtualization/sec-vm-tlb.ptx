@@ -1,0 +1,140 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<section xml:id="sec-vm-tlb" xmlns:xi="http://www.w3.org/2001/XInclude">
+  <title>Translation Lookaside Buffers</title>
+  <p>In this section we discuss how to speed up the paging process. Start from  <url href="source/memory-virtualization/sec-vm-paging.ptx">Paging: Faster Lookups (TLBs)</url> chapter, intro and sections 19.1, 19.2.</p>
+  <exercise label="ex-tlbs">
+    <statement>
+      <p>What is another name for the translation lookaside buffer?</p>
+    </statement>
+    <choices>
+      <choice correct="yes">
+        <statement>
+          <p>address translation cache</p>
+        </statement>
+      </choice>
+      <choice correct="no">
+        <statement>
+          <p>memory management unit</p>
+        </statement>
+      </choice>
+      <choice correct="no">
+        <statement>
+          <p>hardware cache</p>
+        </statement>
+      </choice>
+    </choices>
+  </exercise>
+  <exercise label="ex-tlb-terminology">
+    <statement>
+      <p>Match the terms to their definitions.</p>
+    </statement>
+    <cardsort>
+      <match>
+          <premise order="4">TLB hit</premise>
+          <response>The TLB contains a valid translation entry for the requested VPN.</response>
+      </match>
+      <match>
+          <premise order="2">TLB miss</premise>
+          <response>The TLB doesn't contains a valid translation entry for the requested VPN.</response>
+      </match>
+      <match>
+          <premise order="3">TLB</premise>
+          <response>A hardware cache of virtual-to-physical page translations.</response>
+      </match>
+      <match>
+          <premise order="1">Spacial Locality</premise>
+          <response>When the addresses requested by a program are close to each other in space.</response>
+      </match>
+      <match>
+          <premise order="5">Temporal Locality</premise>
+          <response>An address that has been accessed is likely to be re-accessed soon in the future.</response>
+      </match>
+    </cardsort>
+  </exercise>
+  <exercise label="ex-tlb-example">
+    <statement>
+      <p>Consider the array example described in the book, in figure 19.2. In this example there was a total of 3 TLB misses and 7 TLB hits, for a hit rate of 70%. If the page size was twice as large, so each page was 2 of the rows/pages shown in the figure, then the "old" VPN pages 6 and 7 would collectively be the new VPN page 3, and old VPN pages 8, 9 would collectively be the new VPN page 4. In this situation:</p>
+      <ul>
+        <li>
+          <p>There would be <fillin characters="2" answer="2" mode="number" /> TLB misses.</p>
+        </li>
+        <li>
+          <p>There would be <fillin characters="2" answer="8" mode="number" /> TLB hits.</p>
+        </li>
+        <li>
+          <p>There hit rate would be <fillin characters="2" answer="80" mode="number" /> percent.</p>
+        </li>
+      </ul>
+    </statement>
+    <evaluation>
+      <evaluate>
+        <test><numcmp use-answer="yes"></numcmp></test>
+      </evaluate>
+      <evaluate>
+        <test><numcmp use-answer="yes"></numcmp></test>
+      </evaluate>
+      <evaluate>
+        <test><numcmp use-answer="yes"></numcmp></test>
+      </evaluate>
+    </evaluation>
+  </exercise>
+  <p>Read section 19.3, about who handles the TLB misses.</p>
+  <exercise label="ex-tlb-handling">
+    <statement correct="no">
+      <p>True or False: A TLB miss must always be handled by some appropriate software code.</p>
+    </statement>
+  </exercise>
+  <exercise label="ex-tlb-trap-handler-return">
+    <statement correct="no">
+      <p>True or False: When a TLB miss is handled by the software via a trap handler, then the return from that trap handler works as "normal", i.e. it returns to execute the instruction after the one that caused the interrupt.</p>
+    </statement>
+  </exercise>
+  <p>Read section 19.4, which discusses what is contained in a TLB entry. Make sure you also read the aside about "TLB valid bit vs page table valid bit"</p>
+  <exercise label="ex-tlb-hardware-use">
+    <statement>
+      <p>How does the hardware look for a possible entry in the TLB?</p>
+    </statement>
+    <choices>
+      <choice correct="no">
+        <statement>
+          <p>It goes through each row one at a time checking for a matching VPN.</p>
+        </statement>
+      </choice>
+      <choice correct="no">
+        <statement>
+          <p>The buffer is indexed by the VPNs, and the hardware jumps to the correct row right away.</p>
+        </statement>
+      </choice>
+      <choice correct="yes">
+        <statement>
+          <p>It checks all rows at the same time, in search of a match.</p>
+        </statement>
+      </choice>
+    </choices>
+  </exercise>
+  <p>Read section 19.5 about what happens during a context switch.</p>
+  <exercise label="ex-tlb-context-switch">
+    <statement>
+      <p>Which of these are valid approaches to handling the problems occurring during a context switch?</p>
+    </statement>
+    <choices multiple-correct="yes">
+      <choice correct="yes">
+        <statement>
+          <p>Completely flush the TLB on each context switch.</p>
+        </statement>
+      </choice>
+      <choice correct="yes">
+        <statement>
+          <p>Add information on each row connecting the row to the address space it comes from.</p>
+        </statement>
+      </choice>
+      <choice correct="no">
+        <statement>
+          <p>Use read/write/execute bits in the cache rows.</p>
+        </statement>
+      </choice>
+    </choices>
+  </exercise>
+  <p>Read sections 19.6-19.8</p>
+</section>
