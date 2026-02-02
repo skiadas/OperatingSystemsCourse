@@ -2,7 +2,7 @@
 
 <section xml:id="sec-vm-tlb" xmlns:xi="http://www.w3.org/2001/XInclude">
   <title>Translation Lookaside Buffers</title>
-  <p>In this section we discuss how to speed up the paging process. Start from  <url href="source/memory-virtualization/sec-vm-paging.ptx">Paging: Faster Lookups (TLBs)</url> chapter, intro and sections 19.1, 19.2.</p>
+  <p>In this section we discuss how to speed up the paging process. Start from  <url href="https://pages.cs.wisc.edu/~remzi/OSTEP/vm-tlbs.pdf">Paging: Faster Lookups (TLBs)</url> chapter, intro and sections 19.1, 19.2.</p>
   <exercise label="ex-tlbs">
     <statement>
       <p>What is another name for the translation lookaside buffer?</p>
