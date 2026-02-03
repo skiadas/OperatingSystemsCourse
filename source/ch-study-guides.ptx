@@ -1,0 +1,110 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<chapter xml:id="ch-study-guides" xmlns:xi="http://www.w3.org/2001/XInclude">
+  <title>Study Guides</title>
+
+  <!-- include sections --> <!--
+  <xi:include href="sec-section-name.ptx" />
+  -->
+  <section xml:id="sec-exam-1">
+    <title>Exam 1</title>
+
+    <p>
+      General topics: Up to chapter 20 on advanced page tables.
+    </p>
+
+    <p>
+      <ol>
+        <li>
+          <p>
+            An OS in general aims to deliver transparency, efficiency, fairness and protection.
+            Explain how this is achieved in regards to running processes on the CPU.
+            Key things: direct execution, timer interrupts, context switch
+          </p>
+        </li>
+
+        <li>
+          <p>
+            Explain the various statuses that a process can be in, and what transitions are possible
+          </p>
+        </li>
+
+        <li>
+          <p>
+            Explain what the context switch is and what needs to happen during it
+          </p>
+        </li>
+
+        <li>
+          <p>
+            Explain what limited direct execution is
+          </p>
+        </li>
+
+        <li>
+          <p>
+            Describe at a high level how system calls are made, and why we need something like that
+          </p>
+        </li>
+
+        <li>
+          <p>
+            Discuss the different scheduling algorithms and what the advantages and disadvantages of each are.
+          </p>
+        </li>
+
+        <li>
+          <p>
+            Be able to work out specific example of process scheduling for a given algorithm.
+            (FIFO, SJF, STCF, RR, MLFQ)
+          </p>
+        </li>
+
+        <li>
+          <p>
+            What are different metric we can use to evaluate the performance of a scheduling algorithm? When would each metric be suitable.
+          </p>
+        </li>
+
+        <li>
+          <p>
+            What are the 5 rules for the MLFQ? What is the importance of each rule?
+          </p>
+        </li>
+
+        <li>
+          <p>
+            An OS in general aims to deliver transparency, efficiency, fairness and protection.
+            Explain how this is achieved in regards to memory management.
+            Key things: address spaces, virtual memory, page tables, TLB cache.
+          </p>
+        </li>
+
+        <li>
+          <p>
+            Describe the basic idea of address translation in general and more concretely for the various approaches to VM set up (basic base and bounds, segmentation, paging).
+            Be able to translate a virtual address to a physical address in each case.
+          </p>
+        </li>
+
+        <li>
+          <p>
+            Be able to describe the concepts of external fragmentation, internal fragmentation, spacial locality and temporal locality, their significance, and the effect that different VM approaches have to them.
+          </p>
+        </li>
+
+        <li>
+          <p>
+            Explain how TLBs work and how they can help make paging efficient.
+          </p>
+        </li>
+
+        <li>
+          <p>
+            Be able to work with a basic multi-level page table example
+          </p>
+        </li>
+      </ol>
+    </p>
+  </section>
+</chapter>

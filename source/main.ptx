@@ -17,6 +17,7 @@
     <xi:include href="./memory-virtualization/ch-memory-virtualization.ptx" />
     <xi:include href="./ch-concurrency.ptx" />
     <xi:include href="./ch-persistence.ptx" />
+    <xi:include href="./ch-study-guides.ptx" />
 
 
     <!-- Include backmatter -->
