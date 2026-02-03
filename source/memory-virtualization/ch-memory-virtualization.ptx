@@ -13,5 +13,6 @@
   <xi:include href="sec-vm-segmentation-free-space-management.ptx" />
   <xi:include href="sec-vm-paging.ptx" />
   <xi:include href="sec-vm-tlb.ptx" />
+  <xi:include href="sec-vm-advanced-tables.ptx" />
 
 </chapter>

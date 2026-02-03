@@ -1,0 +1,68 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<section xml:id="sec-vm-advanced-tables" xmlns:xi="http://www.w3.org/2001/XInclude">
+  <title>Advanced Page Tables</title>
+  <p>In this section we discuss ways to store advanced tables more efficiently. This is [chapter 20](https://pages.cs.wisc.edu/~remzi/OSTEP/vm-smalltables.pdf). Start with section 20.1.</p>
+  <exercise label="ex-vm-advanced-tables-bigger-pages">
+    <statement>
+      <p>What is the main reason for not using bigger pages?</p>
+    </statement>
+    <choices>
+      <choice correct="yes">
+        <statement>
+          <p>We risk wasting more space internally as we are less likely to always use the whole page.</p>
+        </statement>
+      </choice>
+      <choice correct="no">
+        <statement>
+          <p>We can't easily use two different page sizes.</p>
+        </statement>
+      </choice>
+      <choice correct="no">
+        <statement>
+          <p>Page accesses would be slower with bigger pages.</p>
+        </statement>
+      </choice>
+    </choices>
+  </exercise>
+  <p>Read section 20.2, about the approach of combining paging and segments.</p>
+  <exercise label="ex-vm-advanced-tables-disadvantages">
+    <statement>
+      <p>What are disadvantages of the hybrid approach?</p>
+    </statement>
+    <choices>
+      <choice correct="yes">
+        <statement>
+          <p>We may still end up with wasted page table space, for example if the heap is sparsely populated.</p>
+        </statement>
+      </choice>
+      <choice correct="no">
+        <statement>
+          <p>It is too slow to access.</p>
+        </statement>
+      </choice>
+      <choice correct="yes">
+        <statement>
+          <p>Page tables now have variable size and that may make it harder to find suitable space for them.</p>
+        </statement>
+      </choice>
+    </choices>
+  </exercise>
+  <p>Read section 20.3 about multi-level page tables. This is the main approach in use, and it is the one that our xv6-riscv operating system employs. Focus on this section.</p>
+  <exercise label="ex-vm-multi-level-page-table-directory">
+    <statement correct="yes">
+      <p>True or False: In a multi-level page table what we find at the page directory is the physical addresses where the page tables are. An invalid entry in the page directory means that all the pages that would have been in the range represented by that particular page table are all invalid.</p>
+    </statement>
+  </exercise>
+  <exercise label="ex-vm-multi-level-page-table-advantage">
+    <statement correct="yes">
+      <p>True or False: One advantage of the multi-level page table is that we don't need to store the whole table in one large consecutive memory space.</p>
+    </statement>
+  </exercise>
+  <exercise label="ex-vm-multi-level-page-table-disadvantage">
+    <statement correct="yes">
+      <p>True or False: A disadvantage of multi-level page tables is that TLB misses are more expensive, as they require two memory lookups to get to the right location.</p>
+    </statement>
+  </exercise>
+  <p>Skim through sections 20.4-20.6.</p>
+</section>
