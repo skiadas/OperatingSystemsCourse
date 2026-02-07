@@ -1,0 +1,114 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<section xml:id="sec-vm-page-swapping" xmlns:xi="http://www.w3.org/2001/XInclude">
+  <title>Page Swapping</title>
+
+  <p>
+    In this section we discuss the process of storing unused pages to a disk, increase the amount of perceived memory available to processes. This is covered in two chapters. Start with [chapter 21](https://pages.cs.wisc.edu/~remzi/OSTEP/vm-beyondphys.pdf).
+    In particular sections 21.1, 21.2.
+  </p>
+  <exercise label="ex-page-swapping-present-bit">
+    <statement>
+      <p>What is the purpose of the <em>present bit</em>?</p>
+    </statement>
+    <choices>
+      <choice correct="no">
+        <statement>
+          <p>It says whether the page can be found in the TLB.</p>
+        </statement>
+      </choice>
+      <choice correct="no">
+        <statement>
+          <p>It says that this page is used by the process and its information is currently in disk.</p>
+        </statement>
+      </choice>
+<choice correct="yes">
+        <statement>
+          <p>It says that this page is currently in memory in the location indicated by the PTE.</p>
+        </statement>
+      </choice>
+    </choices>
+  </exercise>
+  <p>Read section 21.3, on page faults.</p>
+  <exercise label="ex-page-swapping-page-fault">
+    <statement correct="yes">
+      <p>True or False: If the present bit is 0, meaning the page is not in memory but only in disk, then we use the space of the PTE where the PFN is normally stored to instead store the disk location of the page.</p>
+    </statement>
+  </exercise>
+  <exercise label="ex-page-swapping-page-fault-process-blocked">
+    <statement correct="yes">
+      <p>True or False: While a page fault is being serviced, the process is considered to be in the blocked state.</p>
+    </statement>
+  </exercise>
+  <p>
+    Read section 21.4 describing the overall process for what happens when a page fault occurs.
+  </p>
+  <exercise label="ex-page-swapping-full-memory">
+    <statement>
+      <p>Open-ended: Describe the overall process for handling a request for a memory address. It should roughly include these steps:
+        <ul>
+          <li>Look in the TLB.</li>
+          <li>If TLB miss, look in the page table for the PTE.</li>
+          <li>If PTE is invalid error (or allocate new block).</li>
+          <li>If PTE is valid but not present, initiate page swap.</li>
+          <li>If PTE is valid and present, return entry.</li>
+          <li><p>
+            For the allocate or page swap cases:
+            <ul>
+              <li>Look for free physical location in memory. If found, allocate or load.</li>
+              <li>If not found, evict a page then allocate/load in its place.</li>
+            </ul>
+          </p></li>
+        </ul>
+      </p>
+    </statement>
+  </exercise>
+  <p>Skim through sections 21.6 and 21.7.</p>
+  <p>Start on <url href="https://pages.cs.wisc.edu/~remzi/OSTEP/vm-beyondphys-policy.pdf">chapter 22</url> on policies governing page-swapping. The overall question is how to decide which page to evict. Read section 22.1 which discusses the <em>average memory access time</em> measure (<abbr>AMAT</abbr>). Try some examples with different numbers.</p>
+  <p>Read section 22.2 about the theoretically optimal replacement policy.</p>
+  <exercise label="ex-page-swapping-optimal-policy">
+    <statement>
+      <p>What is the choice made by the optimal policy, in terms of which page to evict?</p>
+    </statement>
+  <choices>
+    <choice correct="yes">
+      <statement>
+        <p>If we could look at future accesses, we want the page that is accessed for the first time furthest in the future.</p>
+      </statement>
+    </choice>
+    <choice correct="no">
+      <statement>
+        <p>If we could look at future accesses, we want the page that is accessed the fewest times in the future.</p>
+      </statement>
+    </choice>
+    <choice correct="no">
+      <statement>
+        <p>If we look at past accesses, we want the page that has been accessed least recently.</p>
+      </statement>
+    </choice>
+    <choice correct="no">
+      <statement>
+        <p>If we look at past accesses, we want the page that has been accessed fewer times.</p>
+      </statement>
+    </choice>
+  </choices>
+  </exercise>
+  <exercise label="ex-page-swapping-cold-start-misses">
+    <statement correct="no">
+      <p>True or False: Cold start misses can be avoided if we are clever about how we store and swap pages.</p>
+    </statement>
+  </exercise>
+  <p>Skim through sections 22.3 and 22.4 which discuss two inferior approaches: FIFO and random.</p>
+  <exercise label="ex-page-swapping-fifo-increased-cache-miss-rate">
+    <statement correct="yes">
+      <p>True or False: When using FIFO page eviction policy, there are situations where increasing the cache size may lead to a decreased cache hit rate and performancee.</p>
+    </statement>
+  </exercise>
+  <p>Read sections 22.5 and 22.6 about the LFU and LRU eviction policies.</p>
+  <exercise label="ex-page-swapping-lru-with-locality">
+    <statement correct="yes">
+      <p>True or False: The effectiveness of these LFU and LRU policies relies on the principle of locality.</p>
+    </statement>
+  </exercise>
+  <p>Skim through the remaining sections of chapter 22. Sections 22.7 and 22.8 discuss how to perform approximate LRU efficiently. Section 22.9 discusses what needs to change if a page that is in memory has some changes compared to the version stored on disk. Section 22.11 discusses the problem of thrashing. Section 22.12 is a summary.</p>
+</section>
