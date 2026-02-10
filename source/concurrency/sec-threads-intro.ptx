@@ -1,0 +1,84 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<section xml:id="sec-threads-intro" xmlns:xi="http://www.w3.org/2001/XInclude">
+  <title>Concurrency and Threads</title>
+  <p>This section covers  <url href="https://pages.cs.wisc.edu/~remzi/OSTEP/threads-intro.pdf">book chapter 26</url>. Start with the introduction and section 26.1, about what threads are.</p>
+  <exercise label="ex-threads-intro-context-switch">
+    <statement>
+      <p>Which of the following must be switched out when a context switch happens between threads within the same process?</p>
+    </statement>
+    <choices multiple-correct="yes">
+      <choice correct="yes">
+        <statement>
+          <p>The values in the registers</p>
+        </statement>
+      </choice>
+      <choice correct="yes">
+        <statement>
+          <p>The program counter</p>
+        </statement>
+      </choice>
+      <choice correct="yes">
+        <statement>
+          <p>The stack pointer</p>
+        </statement>
+      </choice>
+      <choice correct="no">
+        <statement>
+          <p>The page table information</p>
+        </statement>
+      </choice>
+      <choice correct="no">
+        <statement>
+          <p>The TLB cache information</p>
+        </statement>
+      </choice>
+    </choices>
+  </exercise>
+  <exercise label="ex-threads-intro-when-to-use">
+    <statement>
+      <p>Which of these are reasons to use multiple threads, instead of multiple processes?</p>
+    </statement>
+    <choices multiple-correct="no">
+      <choice correct="yes">
+        <statement>
+          <p>We want to share date between the threads.</p>
+        </statement>
+      </choice>
+      <choice correct="no">
+        <statement>
+          <p>We want to run things on multiple CPUs.</p>
+        </statement>
+      </choice>
+      <choice correct="no">
+        <statement>
+          <p>We want to do something else while waiting for I/O.</p>
+        </statement>
+      </choice>
+    </choices>
+  </exercise>
+  <p>Read section 26.2 for an example of thread creation.</p>
+  <exercise label="ex-threads-intro-order-of-execution">
+    <statement correct="no">
+      <p>True or False: threads will run in the order they are created.</p>
+    </statement>
+  </exercise>
+  <exercise label="ex-threads-intro-order-open-ended">
+    <statement>
+      <p>Figures 26.3, 26.4, and 26.5 show three possible "thread traces" of how the execution of the same lines of code could happen. Come up with at least four more possible scenarios.</p>
+    </statement>
+  </exercise>
+  <p>Read sections 26.3 and 26.4, discussing the problem involving shared data.</p>
+  <exercise label="ex-threads-intro-data-race">
+    <statement correct="yes">
+      <p>True or False: A <em>race condition</em> occurs when multiple threads are about to perform changes to the same data, and the order in which these steps are done may change the outcome.</p>
+    </statement>
+  </exercise>
+  <exercise label="ex-threads-intro-critical-section">
+    <statement correct="yes">
+      <p>True or False: A <em>critical section</em> is a piece of code that accesses a shared variable that should not be concurrently executed by more than one thread. Doing so can lead to race conditions.</p>
+    </statement>
+  </exercise>
+  <p>Read section 26.5 about the meaning of "atomic operations", and <em>synchronization primitives</em>.</p>
+  <p>Read section 26.6, about the problem of waiting for another part of the system, and 26.7 about a summary.</p>
+</section>

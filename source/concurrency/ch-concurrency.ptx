@@ -4,10 +4,10 @@
   <title>Concurrency</title>
 
   <introduction>
-    <p> Text before the first section. </p>
+    <p> This chapter discusses issues related to the parallel execution of tasks, and the tools that the OS must provide to support them.</p>
   </introduction>
 
   <!-- include sections -->
-  <!-- <xi:include href="sec-section-name.ptx" /> -->
+  <xi:include href="sec-threads-intro.ptx" />
 
 </chapter>
