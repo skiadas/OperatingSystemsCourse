@@ -1,0 +1,156 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<section xml:id="sec-threads-api" xmlns:xi="http://www.w3.org/2001/XInclude">
+  <title>Thread API</title>
+  <p>This small section covers  <url href="https://pages.cs.wisc.edu/~remzi/OSTEP/threads-api.pdf">book chapter 27</url>, a relatively small chapter that discusses the POSIX threads API for creating and working with threads. Start with the introduction and section 27.1, about creating threads.</p>
+  <exercise label="ex-thread-create-arguments">
+    <statement>
+      <p>The following statements describe the arguments to the <c>pthread_create</c> function. Order them according to their order in the function definition.</p>
+    </statement>
+    <blocks>
+      <block order="4">
+        <p>A pointer to the structure to store information about the thread.</p>
+      </block>
+      <block order="3">
+        <p>A structure with attributes that we would like this thread to have, like stack size or priority.</p>
+      </block>
+      <block order="2">
+        <p>A pointer to the function/code to start executing in the thread.</p>
+      </block>
+      <block order="1">
+        <p>The argument to be passed to the function that will be run in the thread.</p>
+      </block>
+    </blocks>
+  </exercise>
+  <p>Read section 27.2, about how to wait for a thread to complete.</p>
+  <exercise label="ex-thread-join-different-from-process">
+    <statement correct="yes">
+      <p>True or False: Unlike in the process API where we could wait for any of our process children to finish, in the thread API we have to wait for a specific thread to finish.
+      </p>
+    </statement>
+  </exercise>
+  <exercise label="ex-thread-join-name">
+    <statement>
+      <p>The function used to wait for a thread to complete is called:</p>
+    </statement>
+    <choices>
+      <choice correct="yes">
+        <statement>
+          <p><c>pthread_join</c></p>
+        </statement>
+      </choice>
+      <choice correct="no">
+        <statement>
+          <p><c>pthread_wait</c></p>
+        </statement>
+      </choice>
+      <choice correct="no">
+        <statement>
+          <p><c>join</c></p>
+        </statement>
+      </choice>
+      <choice correct="no">
+        <statement>
+          <p><c>wait</c></p>
+        </statement>
+      </choice>
+      <choice correct="no">
+        <statement>
+          <p><c>finish_already</c></p>
+        </statement>
+      </choice>
+    </choices>
+  </exercise>
+  <exercise label="ex-thread-join-return-value">
+    <statement correct="no">
+      <p>True or False: The return value of the function used to wait for a thread is exactly the value that the function running in the thread returns.</p>
+    </statement>
+    <feedback>
+      <p>Take another look at the second parameter.</p>
+    </feedback>
+  </exercise>
+  <exercise label="ex-thread-join-not-needed">
+    <statement correct="yes">
+      <p>True or False: Some programs like web servers may start threads but never wait for them to finish. For example worker threads that are perpetually given tasks to do from the main thread.</p>
+    </statement>
+  </exercise>
+  <p>Read section 27.3 about using locks. </p>
+  <exercise label="ex-thread-lock-waits">
+    <statement correct="no">
+      <p>True or False: If a thread reaches a <c>pthread_mutex_lock</c> call and another thread holds the lock at the time, then the call returns 0.</p>
+    </statement>
+    <feedback>
+      <p>Read this section again carefully. The call will just block there waiting for the lock to be released.</p>
+    </feedback>
+  </exercise>
+  <exercise label="ex-thread-lock-initialize">
+    <statement>
+      <p>The usual way to initialize a lock variable is to use:</p>
+    </statement>
+    <choices>
+      <choice correct="yes">
+        <statement>
+          <p><c>pthread_mutex_init</c></p>
+        </statement>
+      </choice>
+      <choice correct="no">
+        <statement>
+          <p><c>lock_init</c></p>
+        </statement>
+      </choice>
+      <choice correct="no">
+        <statement>
+          <p><c>initialize</c></p>
+        </statement>
+      </choice>
+      <choice correct="no">
+        <statement>
+          <p>Not need to initialize.</p>
+        </statement>
+      </choice>
+    </choices>
+  </exercise>
+  <exercise label="ex-thread-lock-various-acquisitions">
+    <statement>
+      <p>There are three methods that can be used to acquire a lock. Match each to its behavior.</p>
+    </statement>
+    <cardsort>
+      <match>
+          <premise order="2"><p><c>pthread_mutex_lock</c></p></premise>
+          <response>Block and wait until the lock is available.</response>
+      </match>
+      <match>
+          <premise order="1"><p><c>pthread_mutex_trylock</c></p></premise>
+          <response>Try to acquire the lock and immediately return with 1 or 0 depending on whether you were successful.</response>
+      </match>
+      <match>
+          <premise order="3"><p><c>pthread_mutex_timedlock</c></p></premise>
+          <response>Try to acquire the lock and wait up to a certain timeout period if it isn't available. Return failure if the timeout period passes.</response>
+      </match>
+    </cardsort>
+  </exercise>
+  <p>Read section 27.4 about the concept of <term>condition variables</term>. This is a tricky section, read it carefully.</p>
+  <exercise label="ex-thread-condition-vars-and-locks">
+    <statement>
+      <p>Study the code blocks at the bottom of page 7 and the top of page 8. The first block appears to wait forever within the lock block until <c>ready == 0</c>. The second block sets <c>ready = 1</c> inside a lock block. How will this second block ever get to do its job if the first block is already holding the lock?</p>
+    </statement>
+    <choices>
+      <choice correct="no">
+        <statement>
+          <p>You are right, it can't, the book has a mistake!</p>
+        </statement>
+      </choice>
+      <choice correct="no">
+        <statement>
+          <p>Multiple threads can hold the lock at the same time, not a problem.</p>
+        </statement>
+      </choice>
+      <choice correct="yes">
+        <statement>
+          <p>The <c>Pthread_cond_wait</c> call actually releases the lock when it starts, and reaquires it before it returns.</p>
+        </statement>
+      </choice>
+    </choices>
+  </exercise>
+  <p>Read the remaining sections, 27.5 and 27.6. Make sure to also read the ASIDE on the next page.</p>
+</section>

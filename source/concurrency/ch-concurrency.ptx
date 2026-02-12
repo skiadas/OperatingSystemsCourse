@@ -9,5 +9,6 @@
 
   <!-- include sections -->
   <xi:include href="sec-threads-intro.ptx" />
+  <xi:include href="sec-threads-api.ptx" />
 
 </chapter>
