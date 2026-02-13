@@ -1,0 +1,156 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<section xml:id="sec-locks" xmlns:xi="http://www.w3.org/2001/XInclude">
+  <title>Locks</title>
+  <p>This section covers  <url href="https://pages.cs.wisc.edu/~remzi/OSTEP/threads-locks.pdf">book chapter 28</url>, on the topic of locks. Start by reading sections 28.1, 28.2, 28.3.</p>
+  <exercise label="ex-locks-states">
+    <statement>
+      <p>Which of the following are possible states for a lock variable?</p>
+    </statement>
+    <choices multiple-correct="yes">
+      <choice correct="yes">
+        <statement>
+          <p>uninitialized</p>
+        </statement>
+      </choice>
+      <choice correct="yes">
+        <statement>
+          <p>available</p>
+        </statement>
+      </choice>
+      <choice correct="yes">
+        <statement>
+          <p>acquired by a single thread</p>
+        </statement>
+      </choice>
+      <choice correct="no">
+        <statement>
+          <p>acquired by multiple threads</p>
+        </statement>
+      </choice>
+    </choices>
+  </exercise>
+  <p>Read section 28.4 about the criteria to use when evaluating lock implementations.</p>
+  <exercise label="ex-locks-criteria">
+    <statement>
+      <p>Which of the following are objectives of a good lock implementation?</p>
+    </statement>
+    <choices multiple-correct="yes">
+      <choice correct="no">
+        <statement>
+          <p>Ensuring that if there are timing-related errors in user code, they will be notified at compile time.</p>
+        </statement>
+      </choice>
+      <choice correct="yes">
+        <statement>
+          <p>Ensuring that two threads cannot execute code within a lock-protected region at the same time.</p>
+        </statement>
+      </choice>
+      <choice correct="yes">
+        <statement>
+          <p>Ensuring that all threads contending for a lock-protected region of code get a reasonable chance to run that code at some point.</p>
+        </statement>
+      </choice>
+      <choice correct="no">
+        <statement>
+          <p>Allowing for optimal use of multiple CPUs.</p>
+        </statement>
+        <feedback>
+          <p>While this is generally a good goal for an OS, it is not directly related to lock implementations.</p>
+        </feedback>
+      </choice>
+      <choice correct="yes">
+        <statement>
+          <p>Adding little overhead to the runtime of the program.</p>
+        </statement>
+      </choice>
+    </choices>
+  </exercise>
+  <p>Read section 28.5, about the use of interrupt-disabling to provide mutual exclusion.</p>
+  <exercise label="ex-locks-disable-interrupts-disadvantages">
+    <statement>
+      <p>What are the disadvantages of doing locking via disabling interrupts?</p>
+    </statement>
+    <choices multiple-correct="yes">
+      <choice correct="no">
+        <statement>
+          <p>It is simple to implement.</p>
+        </statement>
+        <feedback>
+          <p>That's an advantage, not a disadvantage.</p>
+        </feedback>
+      </choice>
+      <choice correct="yes">
+        <statement>
+          <p>We are allowing user-controlled threads to perform such a priviledged operation as disabling interrupts. This is too much trust put on the user.</p>
+        </statement>
+      </choice>
+      <choice correct="yes">
+        <statement>
+          <p>It won't work reasonably with multiple CPUs.</p>
+        </statement>
+      </choice>
+      <choice correct="yes">
+        <statement>
+          <p>Turning off interrupts for long periods of time can lead in lost interrupts and missed behavior (e.g. a disk read getting lost).</p>
+        </statement>
+      </choice>
+    </choices>
+  </exercise>
+  <p>Read section 28.6, about a first attempt at locks using a simple flag load-store.</p>
+  <exercise label="ex-locks-simple-flag-no-mutex">
+    <statement>
+      <p>Figure 28.2 describes the one of the problems with the simple flag value-setting as a locking mechanism. What problem does it demonstrate?</p>
+    </statement>
+    <choices>
+      <choice correct="no">
+        <statement>
+          <p>Multiple threads might all be stuck waiting for the flag to clear but noone being able to do so.</p>
+        </statement>
+      </choice>
+      <choice correct="yes">
+        <statement>
+          <p>It can happen the multiple threads enter the critical section at the same time.</p>
+        </statement>
+      </choice>
+      <choice correct="no">
+        <statement>
+          <p>A thread might spin-wait and waste many cycles doing nothing.</p>
+        </statement>
+        <feedback>
+          <p>While this is a problem with the overall approach, that is not the problem that Figure 28.2 demonstrates.</p>
+        </feedback>
+      </choice>
+    </choices>
+  </exercise>
+  <p>Read section 28.7, about the test-and-set instruction. Make sure you understand why the code in Figure 28.3 works.</p>
+  <exercise label="ex-locks-test-and-set">
+    <statement correct="yes">
+      <p>True or False: The test-and-set approach requires support from the hardware, in the form of appropriate new instructions.</p>
+    </statement>
+  </exercise>
+  <exercise label="ex-locks-test-and-set-2">
+    <statement correct="no">
+      <p>True or False: The test-and-set approach solves the problem of having the thread spin-wait for its turn.</p>
+    </statement>
+    <feedback>
+      <p>It doesn't solve that problem, but it does solve the problem of actually achieving mutual exclusion.</p>
+    </feedback>
+  </exercise>
+  <p>Read section 28.8, about evaluating spin locks.</p>
+  <exercise label="ex-locks-spin-lock-performance">
+    <statement correct="yes">
+      <p>True or False: Spin locks perform poorly on single-CPU systems, but reasonably on multi-CPU systems.</p>
+    </statement>
+  </exercise>
+  <p>Read section 28.9 about the compare-and-swap primitive.</p>
+  <p>Skip sections 28.10 and 28.11.</p>
+  <p>Read sections 28.12 and 28.13, about one alternative to spinning.</p>
+  <exercise label="ex-locks-yielding-performance">
+    <statement correct="yes">
+      <p>True or False: A lock system based on yielding can still perform poorly if many threads contend for the same lock.</p>
+    </statement>
+  </exercise>
+  <p>Read section 28.14 about using a queue and sleeping infrastructure.</p>
+  <p>The remaining sections are optional.</p>
+</section>
