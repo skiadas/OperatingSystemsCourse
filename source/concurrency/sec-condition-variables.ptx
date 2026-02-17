@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<section xml:id="sec-condition-variables" xmlns:xi="http://www.w3.org/2001/XInclude">
+  <title>Condition Variables</title>
+  <p>This section covers  <url href="https://pages.cs.wisc.edu/~remzi/OSTEP/threads-cv.pdf">book chapter 30</url>, on the topic of condition variables. This whole section is not easy and will require multiple readings and drawing figures.</p>
+  <p>Start by reading the introduction and section 30.1.</p>
+  <p>Make sure you pick up on the fact that "condition variable" is perhaps a bit of a misnomer for what this structure is.</p>
+  <exercise label="ex-condition-variables-mutex-locked-on-wait">
+    <statement correct="yes">
+      <p>True or False: The <c>mutex</c> parameter passed to the <c>wait</c> call is assumed to be locked before the start of the call. The code of wait then atomically releases the lock and puts the thread to sleep. When it is awakened it reacquires the lock. </p>
+    </statement>
+  </exercise>
+  <exercise label="ex-condition-variables-the-join-problem">
+    <statement>
+      <p>Open-ended: Page 4 describe the solution to the "join problem" by considering different possible timings of the execution of code provided in figure 30.3. Make sure you really understand the cases described there, and draw a table or some other method to show the steps.</p>
+      <p>Make sure you also analyze the examples described in figures 30.4 and 30.5 and what the problems with them are. At the end of this section you should be understanding why <c>done</c> is needed, why the lock is needed, and why the lock needs to be released while <c>wait</c> sleeps.</p>
+    </statement>
+  </exercise>
+  <p>Read section 30.2 which discusses the producer-consumer problem, also known as the bounded-buffer problem. The first page shows various examples of bounded-buffer situations. After that is a discussion of the basic setup via <c>get</c>, <c>set</c>, and the <c>producer</c> and <c>consumer</c> functions that will run on the threads. The book casually mentions that we can't simply put a lock around the critical code in <c>put</c> and <c>get</c>, make sure you understand why a simple lock is not going to work.</p>
+  <p>Figure 30.8 then and the text below it show a broken solution using a lock and a condition variable. The book mentions that this will work as long as there is a single producer and a single consumer, make sure you understand why it works.</p>
+  <p>The discussion starting at the bottom of page 8 explains why this will not work if there are more consumers and/or more controllers. Understand the first problem, which has to do with the <c>if</c> statement in the <c>wait</c>, and explains why we need to be using <c>while</c>. Make sure you understand this problem carefully.</p>
+  <p>The second problem is discussed starting on page 11, and it is related to the fact that a consumer may end up awaking another consumer with its signal. Make sure you understand the problem described in that setting.</p>
+  <p>Page 12 then starts the discussion for the final solution, which is to use two condition variables instead of one, one to signal an empty buffer situation and one to signal a full one. Consumers wait on one and signal the other, producers work the other way around.</p>
+  <p>Lastly, skim through the remaining sections, 30.3 and 30.4.</p>
+</section>
