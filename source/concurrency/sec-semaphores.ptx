@@ -1,0 +1,181 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<section xml:id="sec-semaphores" xmlns:xi="http://www.w3.org/2001/XInclude">
+  <title>Semaphores</title>
+  <p>This section covers  <url href="https://pages.cs.wisc.edu/~remzi/OSTEP/threads-sema.pdf">book chapter 31</url>, on the topic of semaphores. This whole section is not easy and will require multiple readings and drawing figures.</p>
+  <p>Start by reading the introduction and section 31.1.</p>
+  <exercise label="ex-semaphores-true-false">
+    <statement>
+      <p>Which of the following are correct statements about semaphores?</p>
+    </statement>
+    <choices multiple-correct="yes">
+      <choice correct="yes">
+        <statement>
+          <p>Semaphores need to be given an initial value, which determines their behavior.</p>
+        </statement>
+      </choice>
+      <choice correct="yes">
+        <statement>
+          <p><c>sem_wait</c> always decrements the value, even when it is negative to begin with.</p>
+        </statement>
+      </choice>
+      <choice correct="no">
+        <statement>
+          <p><c>sem_post</c> only increments the value if there are threads waiting.</p>
+        </statement>
+      </choice>
+      <choice correct="yes">
+        <statement>
+          <p>If the value of the semaphore is initially non-negative, then the current value of the semaphore can tell us if there are any threads waiting and also how many.</p>
+        </statement>
+      </choice>
+      <choice correct="yes">
+        <statement>
+          <p>Critical sections are placed between a <c>sem_wait</c> call and a <c>sem_post</c> call.</p>
+        </statement>
+      </choice>
+      <choice correct="yes">
+        <statement>
+          <p>We can implement semaphores using locks and condition variables.</p>
+        </statement>
+      </choice>
+      <choice correct="yes">
+        <statement>
+          <p>We can implement locks and condition variables using semaphores.</p>
+        </statement>
+      </choice>
+    </choices>
+  </exercise>
+  <p>Read section 31.2, about using a semaphore as a lock.</p>
+  <exercise label="ex-semaphores-as-locks">
+    <statement>
+      <p>We want to use a semaphore as a lock. Match the following values for the semaphore to the state of the system if that is the current value.</p>
+    </statement>
+    <cardsort>
+      <match>
+          <premise order="4">1</premise>
+          <response>No thread currently holds the lock.</response>
+      </match>
+      <match>
+          <premise order="2">0</premise>
+          <response>A thread currently holds the lock. There are no threads waiting.</response>
+      </match>
+      <match>
+          <premise order="1">-1</premise>
+          <response>A thread currently holds the lock. There is one thread waiting.</response>
+      </match>
+      <match>
+          <premise order="3">-2</premise>
+          <response>A thread currently holds the lock. There are two threads waiting.</response>
+      </match>
+      <match>
+          <premise order="5">2</premise>
+          <response>Impossible under normal operation.</response>
+      </match>
+    </cardsort>
+  </exercise>
+  <exercise label="ex-semaphores-locks-open-ended">
+    <statement>
+      <p>Figure 31.5 describes a case where only two threads compete for the semaphore/lock. Draw a similar table for a case with 3 threads.</p>
+    </statement>
+  </exercise>
+  <p>Read section 31.3 for the use of a semaphore as an <em>ordering</em> primitive, similar to the use of condition variables.</p>
+  <exercise label="ex-semaphores-cond-variable">
+    <statement>
+      <p>When using the semaphore as an ordering primitive, to make sure a parent waits for a child to complete:</p>
+    </statement>
+    <choices multiple-correct="yes">
+      <choice correct="yes">
+        <statement>
+          <p>The initial value must be set to 0.</p>
+        </statement>
+      </choice>
+      <choice correct="yes">
+        <statement>
+          <p>The parent must call <c>sem_wait</c>.</p>
+        </statement>
+      </choice>
+      <choice correct="no">
+        <statement>
+          <p>The child must call <c>sem_post</c> at the start of its code.</p>
+        </statement>
+      </choice>
+    </choices>
+  </exercise>
+  <exercise label="ex-semaphores-ordering-multiple-children">
+    <statement>
+      <p>After reading the tip section titled <em>SETTING THE VALUE OF A SEMAPHORE</em> answer the following: If we wanted have the parent spawn two child processes and wait for both of them to finish, with as similar a setup as for the one-thread case and by adding another call to <c>pthread_create</c>, what should we do?</p>
+    </statement>
+    <choices>
+      <choice correct="no">
+        <statement>
+          <p>Set the initial value of the semaphore to -1, and change nothing else.</p>
+        </statement>
+      </choice>
+      <choice correct="yes">
+        <statement>
+          <p>Keep the value of the semaphore at 0, but call <c>sem_wait</c> twice.</p>
+        </statement>
+      </choice>
+      <choice correct="no">
+        <statement>
+          <p>Set the value of the semaphore to -1 and call <c>sem_wait</c> twice.</p>
+        </statement>
+      </choice>
+      <choice correct="no">
+        <statement>
+          <p>Change nothing else</p>
+        </statement>
+      </choice>
+    </choices>
+  </exercise>
+  <p>Read section 31.4, about the producer/consumer problem via semaphores. I strongly encourage you to pause and think about it when the book asks you to, rather than reading ahead immediately.</p>
+  <p>Make sure to understand in particular how we can arise at a deadlock situation if we add the mutex lock at the wrong place. The lesson here is to reduce the scope of the mutex lock to the absolute minimum.</p>
+  <p>Read section 31.5 about a different kind of locking mechanism, the reader-writer locks, which allow situations where many readers can run concurrently as long as there is no writer updating things at the same time.</p>
+  <exercise label="ex-semaphores-read-write-locks">
+    <statement>
+      <p>In the reader-writer lock example described in the book:</p>
+    </statement>
+    <choices multiple-correct="yes">
+      <choice correct="no">
+        <statement>
+          <p>Every reader waits on both the <c>lock</c> and the <c>writelock</c>.</p>
+        </statement>
+      </choice>
+      <choice correct="yes">
+        <statement>
+          <p>A reader only waits on the <c>writelock</c> if there are no other readers.</p>
+        </statement>
+      </choice>
+      <choice correct="yes">
+        <statement>
+          <p>If a writer is currently writing and thus holding the <c>writelock</c>, the first reader will wait on the <c>writelock</c> but subsequent readers will wait on <c>lock</c> instead.</p>
+        </statement>
+      </choice>
+      <choice correct="no">
+        <statement>
+          <p>A deadlock might occur if we have multiple writers and multiple readers.</p>
+        </statement>
+      </choice>
+      <choice correct="yes">
+        <statement>
+          <p>There is a risk of starvation of the writers where the much more frequent readers keep holding the <c>writelock</c> and not letting the writers run.</p>
+        </statement>
+      </choice>
+    </choices>
+  </exercise>
+  <p>Read section 31.6 about the dining philosophers problem and its solution. Make sure you understand why the solution works. Can you think of other possible solutions?</p>
+  <p>Read section 31.7 about the idea of using a semaphore to control how many threads can run something at a given time.</p>
+  <exercise label="ex-semaphores-throttling">
+    <statement>
+      <p>In order to use a semaphore to control that a section of code should only ever be accessed by at most 4 threads at once, we would initialize the semaphore with a value of <fillin characters="2" answer="4" mode="number" />.</p>
+    </statement>
+    <evaluation>
+      <evaluate>
+        <test><numcmp use-answer="yes"></numcmp></test>
+      </evaluate>
+    </evaluation>
+  </exercise>
+  <p>Read section 31.8, for one way to implement semaphores using locks and condition variables.</p>
+  <p>Read the summary on section 31.9.</p>
+</section>

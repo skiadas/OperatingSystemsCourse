@@ -12,5 +12,6 @@
   <xi:include href="sec-threads-api.ptx" />
   <xi:include href="sec-locks.ptx" />
   <xi:include href="sec-condition-variables.ptx" />
+  <xi:include href="sec-semaphores.ptx" />
 
 </chapter>
