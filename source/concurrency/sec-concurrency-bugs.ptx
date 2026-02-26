@@ -1,0 +1,93 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<section xml:id="sec-concurrency-bugs" xmlns:xi="http://www.w3.org/2001/XInclude">
+  <title>Concurrency Bugs</title>
+  <p>This section covers  <url href="https://pages.cs.wisc.edu/~remzi/OSTEP/threads-bugs.pdf">book chapter 32</url>, on the topic of common thread-related concurrency bugs.</p>
+  <p>Start by reading the introduction and sections 32.1 and 32.2.</p>
+  <exercise label="ex-bugs-non-deadlock-solutions">
+    <statement>
+      <p>What concurrency approach helps us deal with each of the following concurrency violations?</p>
+    </statement>
+    <cardsort>
+      <match>
+          <premise order="2">Atomicity Violations</premise>
+          <response>Using a mutex lock around parts that should be executed as one.</response>
+      </match>
+      <match>
+          <premise order="1">Order Violations</premise>
+          <response>Use a condition variable to ensure some piece of code runs before another piece of code.</response>
+      </match>
+    </cardsort>
+  </exercise>
+  <exercise label="ex-bugs-non-deadlock-cases">
+    <statement>
+      <p>Imagine an implementation for a simple linked list. There is a <c>head</c> pointer that is set to <c>null</c> during an <c>init</c> method, and each node has a <c>value</c> and a <c>next</c> pointer. To insert a new node at the start, we have to make a new node, make it point to the current head, then set the current head to the new node. To search for a value we use a <c>curr</c> variable to point to the current node starting from head, return if the node is null, else check if the value matches, then move to next node.</p>
+      <p>What kind of bug would each of the following cases be classified as?</p>
+    </statement>
+    <cardsort>
+      <match>
+          <premise order="3">If two threads try to insert at the same time, and a they both make their node point to the old head, one new node will be lost.</premise>
+          <response>Atomicity Violation</response>
+      </match>
+      <match>
+          <premise order="1">
+            If a search happens before the init method has had a chance to run, the <c>head</c> pointer may point to a random place in memory and problems arise.
+          </premise>
+          <response>Order violation</response>
+      </match>
+      <match>
+          <premise order="2">Two threads both try to ensure a specific element is in the list. They both search for it and if not found then insert it. If not careful, they might both end up inserting the element.</premise>
+          <response>Atomicity Violation.</response>
+      </match>
+    </cardsort>
+  </exercise>
+  <p>Read section 32.3 about more details regarding deadlock bugs.</p>
+  <exercise label="ex-bugs-deadlock-conditions">
+    <statement>
+      <p>Match these conditions for deadlock to their definition.</p>
+    </statement>
+    <cardsort>
+      <match>
+          <premise order="3">A thread claims exclusive control over the resources it needs, by for example acquiring a lock.</premise>
+          <response>Mutual exclusion</response>
+      </match>
+      <match>
+          <premise order="1">The thread holds any resources allocated to them while waiting for the other resources they need.</premise>
+          <response>Hold-and-wait</response>
+      </match>
+      <match>
+          <premise order="2">There is no way to remove a resource from a thread that holds it.</premise>
+          <response>No preemption</response>
+      </match>
+      <match>
+          <premise order="4">There is a circular chain of threads where each thread holds a resource that the next thread needs.</premise>
+          <response>Circular wait</response>
+      </match>
+    </cardsort>
+  </exercise>
+  <p>Make sure you pick up from this section the various approaches we can take in order to avoid deadlocks by preventing one of the above conditions.</p>
+  <exercise label="ex-bugs-deadlock-conditions-preventing">
+    <statement>
+      <p>Match each method of avoiding deadlock to the condition that it prevents.</p>
+    </statement>
+    <cardsort>
+      <match>
+          <premise order="3">Use lock-free structures.</premise>
+          <response>Mutual exclusion</response>
+      </match>
+      <match>
+          <premise order="1">Make all needed lock acquisitions at once while holding a global protection lock.</premise>
+          <response>Hold-and-wait</response>
+      </match>
+      <match>
+          <premise order="2">Use a method like trylock during lock acquisition to avoid being blocked.</premise>
+          <response>No preemption</response>
+      </match>
+      <match>
+          <premise order="4">Enforce a global ordering in which locks are to be acquired.</premise>
+          <response>Circular wait</response>
+      </match>
+    </cardsort>
+  </exercise>
+  <p>Read the summary 32.4</p>
+</section>

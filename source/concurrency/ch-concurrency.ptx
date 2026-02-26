@@ -13,5 +13,6 @@
   <xi:include href="sec-locks.ptx" />
   <xi:include href="sec-condition-variables.ptx" />
   <xi:include href="sec-semaphores.ptx" />
+  <xi:include href="sec-concurrency-bugs.ptx" />
 
 </chapter>
