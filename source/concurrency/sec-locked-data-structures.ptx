@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<section xml:id="sec-locked-data-structures" xmlns:xi="http://www.w3.org/2001/XInclude">
+  <title>Locked Data Structures</title>
+  <p>This section covers  <url href="https://pages.cs.wisc.edu/~remzi/OSTEP/threads-locks-usage.pdf">book chapter 29</url>, on the topic of how to build thread-safe structures and some of the tradeoffs.</p>
+  <p>Read section 29.1, focusing in particular on the "Scalable counting" subsection and the description of an approximate counter.</p>
+  <p>Read section 29.2, about implementing concurrent linked lists. Pay attention to the two approaches: Lock the whole list at once vs locking individual nodes.</p>
+  <p>Read section 29.3, about building a concurrent queue.</p>
+  <p>Read the rest.</p>
+</section>
