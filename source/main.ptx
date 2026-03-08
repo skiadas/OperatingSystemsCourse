@@ -16,7 +16,7 @@
     <xi:include href="./process-virtualization/ch-process-virtualization.ptx" />
     <xi:include href="./memory-virtualization/ch-memory-virtualization.ptx" />
     <xi:include href="./concurrency/ch-concurrency.ptx" />
-    <xi:include href="./ch-persistence.ptx" />
+    <xi:include href="./persistence/ch-persistence.ptx" />
     <xi:include href="./ch-study-guides.ptx" />
 
 

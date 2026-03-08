@@ -1,0 +1,99 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<section xml:id="sec-io-devices" xmlns:xi="http://www.w3.org/2001/XInclude">
+  <title>IO Devices</title>
+  <p>Start by reading the <url href="https://pages.cs.wisc.edu/~remzi/OSTEP/file-devices.pdf">I/O devices</url> chapter, section 36.1. Key takeaway: There are multiple levels of "busses", with difference performance characteristics. Memory/Graphics/General IO.</p>
+  <p>Read sections 36.2 and 36.3 which describe the so-called <em>canonical device</em>.</p>
+  <exercise label="ex-io-devices-canonical-own-cpu">
+    <statement correct="true">
+      <p>True or False: An I/O device may contain its own CPU and memory components.</p>
+    </statement>
+  </exercise>
+  <exercise label="ex-io-devices-canonical-registers">
+    <statement>
+      <p>How do we use the registers of the canonical device?</p>
+    </statement>
+    <cardsort>
+      <match>
+          <premise order="2">Status</premise>
+          <response>Read it to find out what state the device is in.</response>
+      </match>
+      <match>
+          <premise order="1">Command</premise>
+          <response>Write to it to tell the device to do something.</response>
+      </match>
+      <match>
+          <premise order="3">Data</premise>
+          <response>Read/write information from/to the device.</response>
+      </match>
+    </cardsort>
+  </exercise>
+  <exercise label="ex-io-devices-canonical-protocol">
+    <statement>
+      <p>What are the downsides of the <em>programmed I/O protocol</em> discussed in this section?</p>
+    </statement>
+    <choices multiple-correct="yes">
+      <choice correct="yes">
+        <statement>
+          <p>There is a lot of wasted CPU cycles as the CPU polls the device until it is not busy.</p>
+        </statement>
+      </choice>
+      <choice correct="no">
+        <statement>
+          <p>It is simple.</p>
+        </statement>
+      </choice>
+      <choice correct="no">
+        <statement>
+          <p>It is slow.</p>
+        </statement>
+      </choice>
+    </choices>
+  </exercise>
+  <p>Read section 36.4 about using interrupts to avoid the CPU-waiting overhead.</p>
+  <exercise label="ex-io-devices-canonical-interrupts">
+    <statement>
+      <p>What's the best approach to use (polling vs interrupts) for a given device speed?</p>
+    </statement>
+  <cardsort>
+    <match>
+      <premise>Fast device that will finish very quickly.</premise>
+      <response>Polling</response>
+    </match>
+    <match>
+      <premise>Slow device that will probably take a while.</premise>
+      <response>Interrupts</response>
+    </match>
+    <match>
+      <premise>Unknown or variable speed.</premise>
+      <response>Hybrid (Poll for a while then interrupt)</response>
+    </match>
+  </cardsort>
+  </exercise>
+  <p>Read section 36.5 about efficient data movement using <em>Direct-Memory-Access</em> (DMA).</p>
+  <exercise label="ex-io-devices-dma">
+    <statement>
+      <p>What does DMA allow us to do?</p>
+    </statement>
+    <choices multiple-correct="no">
+      <choice correct="yes">
+        <statement>
+          <p>We can copy the needed data to/from the device while our CPU is doing something else.</p>
+        </statement>
+      </choice>
+      <choice correct="no">
+        <statement>
+          <p>We can carry out multiple reads/writes on a device at the same time.</p>
+        </statement>
+      </choice>
+      <choice correct="no">
+        <statement>
+          <p>We can copy the data to the device quicker.</p>
+        </statement>
+      </choice>
+    </choices>
+  </exercise>
+  <p>Read section 36.6 about methods of interacting with a device. In particular understand the <em>memory-mapped IO</em> approach.</p>
+  <p>Read section 36.7 about <em>device drivers</em>.</p>
+  <p>Skim the remaining sections.</p>
+</section>
