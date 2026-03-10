@@ -1,0 +1,140 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<section xml:id="sec-hard-disks" xmlns:xi="http://www.w3.org/2001/XInclude">
+  <title>Hard Disks</title>
+  <p>Start by reading the <url href="https://pages.cs.wisc.edu/~remzi/OSTEP/file-disks.pdf">Hard Disk Drives</url> chapter, sections 37.1 and 37.2.</p>
+  <exercise label="ex-hard-disks-rotation">
+    <statement>
+      <p> (Make sure you read the "Dimensional Analysis" aside) A hard disk is built out of circular surfaces called platters that rotate at rates measured in "rotations per minute". For example if a drive has 10,000 RPMs, i.e. it carries out 10000 rotations per minute, then it would carry out <m>\frac{10000}{60} = \frac{1000}{6}</m> rotations per second. This means then that it takes <m>\frac{6}{1000}</m> seconds, or 6 milliseconds, for a single rotation. How long would a rotation take if the drive speed was 15,000 RPMs?</p>
+    </statement>
+    <choices>
+      <choice correct="yes">
+        <statement>
+          <p>4 milliseconds</p>
+        </statement>
+      </choice>
+      <choice correct="no">
+        <statement>
+          <p>9 milliseconds</p>
+        </statement>
+      </choice>
+      <choice correct="no">
+        <statement>
+          <p>6 milliseconds</p>
+        </statement>
+      </choice>
+      <choice correct="no">
+        <statement>
+          <p>2 milliseconds</p>
+        </statement>
+      </choice>
+    </choices>
+  </exercise>
+  <p>Note this important fact: A drive rotation takes milliseconds, not microseconds. If you have to wait for the drive to do a full rotation to get to your data, that's a lot of time to a CPU.</p>
+  <exercise label="ex-hard-disks-physics-terms">
+    <statement>
+      <p>Match the following terms to their definitions.</p>
+    </statement>
+    <cardsort>
+      <match>
+        <premise>Platter</premise>
+        <response>The surface on which information is written.</response>
+      </match>
+      <match>
+        <premise>Spindle</premise>
+        <response>The mechanism that rotates the disks around.</response>
+      </match>
+      <match>
+        <premise>Track</premise>
+        <response>Each concentric circle on the surface, on which information is written.</response>
+      </match>
+      <match>
+        <premise>Sector</premise>
+        <response>A contiguous block of data read and written as a unit.</response>
+      </match>
+      <match>
+        <premise>Disk Head</premise>
+        <response>The mechanism that reads and writes data at a disk location by interacting with the magnetic field there.</response>
+      </match>
+      <match>
+        <premise>Disk Arm</premise>
+        <response>The mechanism responsible for moving the head to the correct location.</response>
+      </match>
+      <match>
+        <premise>Rotational Delay</premise>
+        <response>The time it takes for the disk to do a full rotation.</response>
+      </match>
+      <match>
+        <premise>Seek</premise>
+        <response>The movement of the arm to a desired track.</response>
+      </match>
+      <match>
+        <premise>Track Buffer</premise>
+        <response>Small memory on the disk to cache data.</response>
+      </match>
+    </cardsort>
+  </exercise>
+  <exercise label="ex-hard-disks-seek">
+    <statement>
+      <p>Imagine we are in the situation described in figure 37.3 on the left side. Assume the arm moves to the outer circle, and it takes 2ms for that to happen. Also assume that the rotation of the disk is 10,000RPMs, so 6ms for a full rotation. Which sector would we be able to read at that moment?</p>
+    </statement>
+    <choices>
+      <choice correct="yes">
+        <statement>
+          <p>10</p>
+        </statement>
+      </choice>
+      <choice correct="no">
+        <statement>
+          <p>34</p>
+        </statement>
+      </choice>
+      <choice correct="no">
+        <statement>
+          <p>0</p>
+        </statement>
+      </choice>
+      <choice correct="no">
+        <statement>
+          <p>2</p>
+        </statement>
+      </choice>
+    </choices>
+  </exercise>
+  <exercise label="ex-hard-disks-skew">
+    <statement correct="yes">
+      <p>The sector numbering on the boundaries between tracks is arranged so that if the arm is at the "last sector" of one track and it were to move to the next track, it would be at the "first sector" of that track, after accounting for the actual disk rotation in the meantime. This way reading consecutive sectors can continue to be fast even when switching tracks.</p>
+    </statement>
+  </exercise>
+  <p>Read section 37.4 to understand the breakdown of I/O time into seek, rotation and transfer time.</p>
+  <exercise label="ex-hard-disks-io">
+    <statement correct="yes">
+      <p>True or False: Sequential access is over 100 times faster than random access, when it comes to hard disks.</p>
+    </statement>
+  </exercise>
+  <exercise label="ex-hard-disks-io">
+    <statement>
+      <p>The Baracuda hard disk has a rotational speed of 7,200 RPMs, which translates to 8.33 milliseconds per rotation, or an average rotation time of about 4.17 ms. It also has an average seek time for 9ms, for a total time spend on rotation and seek equal to 13.17ms on average. With a transfer rate of 105MB per second, how much data do we need to transfer in order for the transfer time to equal this combined seek and rotation time?</p>
+    </statement>
+    <choices>
+      <choice correct="yes">
+        <statement>
+          <p>About 1.4MB</p>
+        </statement>
+      </choice>
+      <choice correct="no">
+        <statement>
+          <p>About 1GB</p>
+        </statement>
+      </choice>
+      <choice correct="no">
+        <statement>
+          <p>About 100MB</p>
+        </statement>
+      </choice>
+    </choices>
+  </exercise>
+  <p>Verify the sequential time values shown in table 37.6.</p>
+  <p>Skim section 37.5, which discusses scheduling questions.</p>
+  <p>Optional read: all of <url href="https://pages.cs.wisc.edu/~remzi/OSTEP/file-raid.pdf">chapter 38 on RAID</url>. The topic here is putting together multiple disks and storing information in multiple disks and in various fashions, with the intent to produce a faster and more reliable system (e.g. even if one drive goes bad, your data is not lost). There's a lot of cool details there, but we won't be covering them in class.</p>
+</section>
