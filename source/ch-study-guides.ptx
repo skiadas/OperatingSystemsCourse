@@ -107,4 +107,99 @@
       </ol>
     </p>
   </section>
+  <section xml:id="sec-exam-2">
+    <title>Exam 2</title>
+
+    <p>
+      General topics: Chapters 26 through 32 (excluding 29).
+    </p>
+
+    <p>
+      <ol>
+        <li>
+          <p>
+            Describe the similarities and differences of threads and processes. What do threads share with each other, what is different? Include at a minimum questions of memory usage, open files, registers, TLBs.
+          </p>
+        </li>
+
+        <li>
+          <p>
+            Given a simple piece of code, demonstrate trace of how if that code is executed by two different threads inconsistencies arise (e.g. losing track of cases when counting), or the output may vary depending on ordering (e.g. printouts happening in varying orders).
+          </p>
+        </li>
+
+        <li>
+          <p>
+            Be able to define and provide examples of key concurrency terms like <em>critical section</em>, <em>race condition</em>, <em>mutual exclusion</em>, <em>atomic operations</em>.
+          </p>
+        </li>
+
+        <li>
+          <p>
+            Be familiar with the core semantics of the thread api, namely the <c>create</c> and <c>join</c> methods. For example, when will a thread created by <c>create</c> start executing? Which thread does <c>join</c> wait for? What happens if that thread has completed before <c>join</c> is called?
+          </p>
+        </li>
+
+        <li>
+          <p>
+            Describe the main mechanism provided by (spin) locks, and provide examples where locks are used to protect some shared data.
+          </p>
+        </li>
+
+        <li>
+          <p>
+            Describe what deadlock is, how it can occur, and different mechanisms for preventing it from completely locking the system up.
+          </p>
+        </li>
+
+        <li>
+          <p>
+            Describe hardware operations that can be used to implement (spin) locks and provide corresponding implementations of the lock interface using such an operation (in particular <c>test-and-set</c>).
+          </p>
+        </li>
+
+        <li>
+          <p>
+            Describe how condition variables work, what they are used for, and how their interface looks like (what methods are used etc). Include a discussion of why there is always an associated spin lock and what happens when a thread goes to sleep using a condition variable.
+          </p>
+        </li>
+
+        <li>
+          <p>
+            Discuss the tradeoffs between <c>signal</c> waking up a single sleeping thread and <c>broadcast</c> waking up all sleeping threads. When might each be appropriate?
+          </p>
+        </li>
+
+        <li>
+          <p>
+            Discuss the bounded buffer problem and how it is solved using 2 condition variables (and why we need 2 variables).
+          </p>
+        </li>
+
+        <li>
+          <p>
+            Define the semantics and API of a <c>semaphore</c>.
+          </p>
+        </li>
+
+        <li>
+          <p>
+            Show how we can implement a lock using a semaphore, and how we can implement ordering of events using a semaphore.
+          </p>
+        </li>
+
+        <li>
+          <p>
+            Describe how to solve the bounded buffer problem (with a buffer of size more than 1) using semaphores.
+          </p>
+        </li>
+
+        <li>
+          <p>
+            Describe the problem solved by the so-called "reader-writer locks". Detail how the two locks on it are used. Explain why normal locks, that are usually required to be unlocked by the same thread that locked them, are not sufficient to solve this problem.
+          </p>
+        </li>
+      </ol>
+    </p>
+  </section>
 </chapter>
