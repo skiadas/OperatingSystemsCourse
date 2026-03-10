@@ -107,7 +107,7 @@
     </statement>
   </exercise>
   <p>Read section 37.4 to understand the breakdown of I/O time into seek, rotation and transfer time.</p>
-  <exercise label="ex-hard-disks-io">
+  <exercise label="ex-hard-disks-seq-vs-random-access">
     <statement correct="yes">
       <p>True or False: Sequential access is over 100 times faster than random access, when it comes to hard disks.</p>
     </statement>
