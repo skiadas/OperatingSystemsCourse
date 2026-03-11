@@ -1,0 +1,123 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<section xml:id="sec-files-directories" xmlns:xi="http://www.w3.org/2001/XInclude">
+  <title>Files and Directories</title>
+  <p>Start by reading the <url href="https://pages.cs.wisc.edu/~remzi/OSTEP/file-intro.pdf">Files and Directories</url> chapter, section 39.1. This section discusses the two key abstractions of <em>files</em> and <em>directories</em>.</p>
+  <exercise label="ex-files-directories-terminology">
+    <statement>
+      <p>Match the terms</p>
+    </statement>
+    <cardsort>
+      <match>
+        <premise>inode number</premise>
+        <response>A number that serves as the low level name for a file.</response>
+      </match>
+      <match>
+        <premise>file</premise>
+        <response>a linear array of bytes you can read/write.</response>
+      </match>
+      <match>
+        <premise>directory</premise>
+        <response>a file whose contents are a list of pairs of a user-friendly filename and an inode number.</response>
+      </match>
+      <match>
+        <premise>absolute pathname</premise>
+        <response>the sequence of directories from the root directory to the file, concatenated by a special separator.</response>
+      </match>
+    </cardsort>
+  </exercise>
+  <p>Read sections 39.2 and 39.3, about the interface for creating files.</p>
+  <exercise label="ex-files-directories-file-descriptor">
+    <statement>
+      <p>A file descriptor is a:</p>
+    </statement>
+    <choices>
+      <choice correct="yes">
+        <statement>
+          <p>integer</p>
+        </statement>
+      </choice>
+      <choice correct="no">
+        <statement>
+          <p>string</p>
+        </statement>
+      </choice>
+      <choice correct="no">
+        <statement>
+          <p>complex object</p>
+        </statement>
+      </choice>
+      <choice correct="no">
+        <statement>
+          <p>a pointer</p>
+        </statement>
+      </choice>
+      <choice correct="no">
+        <statement>
+          <p>none of the above</p>
+        </statement>
+      </choice>
+    </choices>
+  </exercise>
+  <p>Read sections 39.4, 39.5 about reading from and writing to files.</p>
+  <exercise label="ex-files-directories-strace">
+    <statement>
+      <p>When we look at the result of <c>strace cat README.md</c> in our codespaces, there are a lot of outputs but towards the end there are two key calls: One to <c>read</c> in order to read from the opened file and one to <c>write</c> in order to print the results to the screen. Up to how many things would the <c>read</c> call try to read, how big of a buffer did it create? <fillin characters="3" mode="number" answer="131072" /></p>
+      <p>And how many bytes did it actually read?  <fillin characters="3" mode="number" answer="66" /></p>
+      <p>What is the file descriptor number used for the opened <c>README.md</c> file?  <fillin characters="3" mode="number" answer="3" /></p>
+    </statement>
+    <evaluation>
+      <evaluate>
+        <test><numcmp use-answer="yes"></numcmp></test>
+      </evaluate>
+      <evaluate>
+        <test><numcmp use-answer="yes"></numcmp></test>
+      </evaluate>
+      <evaluate>
+        <test><numcmp use-answer="yes"></numcmp></test>
+      </evaluate>
+    </evaluation>
+  </exercise>
+  <exercise label="ex-files-directories-lseek">
+    <statement>
+      <p>Which of the following calls to <c>lseek</c> will position us at the end of the file, so that any subsequent write simply appends to the end?</p>
+    </statement>
+    <choices multiple-correct="no">
+      <choice correct="yes">
+        <statement>
+          <p><c>lseek(fd, 0, SEEK_END)</c></p>
+        </statement>
+      </choice>
+      <choice correct="no">
+        <statement>
+          <p><c>lseek(fd, SEEK_END)</c></p>
+        </statement>
+      </choice>
+      <choice correct="no">
+        <statement>
+          <p><c>lseek(fd, 0, SEEK_CUR)</c></p>
+        </statement>
+      </choice>
+      <choice correct="no">
+        <statement>
+          <p><c>lseek(fd, -1, SEEK_SET)</c></p>
+        </statement>
+      </choice>
+    </choices>
+  </exercise>
+  <exercise label="ex-files-directories-multiple-offsets">
+    <statement correct="no">
+      <p>True or False: If a file is opened via two different file descriptors, both descriptors use the same offset into the file.</p>
+    </statement>
+  </exercise>
+  <p>Read section 39.6 about the <c>fork</c> and <c>dup</c> calls and how they affect file descriptors.</p>
+  <p>Skim sections 39.7-39.10.</p>
+  <p>Read sections 39.11-39.13 about working with directories.</p>
+  <exercise label="ex-files-directories-open-directories">
+    <statement correct="no">
+      <p>True or False: In order to read a directory we use the same calls as those used for reading files.</p>
+    </statement>
+  </exercise>
+  <p>Read sections 39.14, 39.15, about "hard links" and "symbolic links".</p>
+  <p>Skim through the remaining sections.</p>
+</section>
