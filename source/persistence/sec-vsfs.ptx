@@ -1,0 +1,121 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<section xml:id="sec-vsfs" xmlns:xi="http://www.w3.org/2001/XInclude">
+  <title>File System Implementation: vsfs</title>
+  <p>We now start looking at how a file system is organized on a disk. Start by reading the <url href="https://pages.cs.wisc.edu/~remzi/OSTEP/file-implementation.pdf">Files System Implementation</url> chapter, sections 40.1 and 40.2, and the preamble. These introduce the basic structure of a simple file system and discuss the key aspects of it.</p>
+  <exercise label="ex-vsfs-terminology">
+    <statement>
+      <p>Match the following terms to their meaning.</p>
+    </statement>
+    <cardsort>
+      <match>
+        <premise>We segment the total disk space into these pieces</premise>
+        <response>block</response>
+      </match>
+      <match>
+        <premise>The portion of the disk allocated to user information rather than system management.</premise>
+        <response>data region</response>
+      </match>
+      <match>
+        <premise>Metadata information about a particular "file".</premise>
+        <response>inode</response>
+      </match>
+      <match>
+        <premise>A linear set of bytes where each bit represents the status of a particular item in a list of items.</premise>
+        <response>bitmap</response>
+      </match>
+      <match>
+        <premise>A section at the beginning of the disk that holds information about the filesystem itself.</premise>
+        <response>superblock</response>
+      </match>
+    </cardsort>
+  </exercise>
+  <exercise label="ex-vsfs-num-files">
+    <statement correct="yes">
+      <p>True or False: The space allocated to the inode list determines how many files the system can hold.</p>
+    </statement>
+  </exercise>
+  <p>Read section 40.3 about the inode structure.</p>
+  <exercise label="ex-vsfs-inode-info">
+    <statement>
+      <p>Which of the following is information that we can find in an inode?</p>
+    </statement>
+    <choices multiple-correct="yes">
+      <choice correct="yes">
+        <statement>
+          <p>The permissions on the file.</p>
+        </statement>
+      </choice>
+      <choice correct="yes">
+        <statement>
+          <p>The name of the user who owns the file.</p>
+        </statement>
+      </choice>
+      <choice correct="yes">
+        <statement>
+          <p>How many disk blocks the file takes.</p>
+        </statement>
+      </choice>
+      <choice correct="yes">
+        <statement>
+          <p>Where on disk the file contents reside.</p>
+        </statement>
+      </choice>
+      <choice correct="no">
+        <statement>
+          <p>Which directory the file is in.</p>
+        </statement>
+      </choice>
+      <choice correct="no">
+        <statement>
+          <p>A pointer to the next inode on the list.</p>
+        </statement>
+      </choice>
+    </choices>
+  </exercise>
+  <exercise label="ex-vsfs-multi-level-index">
+    <statement>
+      <p>What is the purpose of the multi-level index?</p>
+    </statement>
+    <choices>
+      <choice correct="yes">
+        <statement>
+          <p>To allow the storage of large files that occupy too many blocks on disk.</p>
+        </statement>
+      </choice>
+      <choice correct="no">
+        <statement>
+          <p>To allow faster access to the file contents.</p>
+        </statement>
+      </choice>
+      <choice correct="no">
+        <statement>
+          <p>To have one inode store information about multiple files.</p>
+        </statement>
+      </choice>
+    </choices>
+  </exercise>
+  <p>Read section 40.4 about how directories are organized.</p>
+  <exercise label="ex-vsfs-empty-directory-entries">
+    <statement correct="no">
+      <p>True or False: A directory that contains no files will have no directory entries.</p>
+    </statement>
+  </exercise>
+  <exercise label="ex-vsfs-empty-directory-contents">
+    <statement correct="no">
+      <p>True or False: The contents of a directory are stored in its inode.</p>
+    </statement>
+  </exercise>
+  <p>Read sections 40.5, 40.6.</p>
+  <exercise label="ex-vsfs-file-read-io-number">
+    <statement correct="yes">
+      <p>True or False: The number of I/O operations needed to read a file from disk depends on both the size of the file as well as the depth of the directory level where the file is located.</p>
+    </statement>
+  </exercise>
+  <exercise label="ex-vsfs-file-read-includes-a-write">
+    <statement correct="yes">
+      <p>True or False: Reading a file also includes performing a write request on the file's inode.</p>
+    </statement>
+  </exercise>
+  <p>Skim through sections 40.7, 40.8.</p>
+</section>
