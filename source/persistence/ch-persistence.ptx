@@ -12,5 +12,6 @@
   <xi:include href="sec-hard-disks.ptx" />
   <xi:include href="sec-files-directories.ptx" />
   <xi:include href="sec-vsfs.ptx" />
+  <xi:include href="sec-fsck.ptx" />
 
 </chapter>

@@ -1,0 +1,232 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<section xml:id="sec-fsck" xmlns:xi="http://www.w3.org/2001/XInclude">
+  <title>Consistency: FSCK and Journaling</title>
+  <p>We now start look at ways to ensure consistency in the file system. Start by reading the <url href="https://pages.cs.wisc.edu/~remzi/OSTEP/file-journaling.pdf">Crash Consistency: FSCK and Journaling</url> chapter, section 42.1 and the preamble. </p>
+  <exercise label="ex-vsfs-problems-to-address">
+    <statement>
+      <p>When trying to write to a disk, which of the following problems do we want to avoid as a result of a power loss?</p>
+    </statement>
+    <choices multiple-correct="yes">
+      <choice correct="yes">
+        <statement>
+          <p>We've added the contents of a new file, but not the directory that lists the file.</p>
+        </statement>
+      </choice>
+      <choice correct="yes">
+        <statement>
+          <p>We've added the contents of a new file, but didn't update the parent directory that should list the file.</p>
+        </statement>
+      </choice>
+      <choice correct="yes">
+        <statement>
+          <p>We've updated the contents and size of a file, but the inode still shows the old information.</p>
+        </statement>
+      </choice>
+      <choice correct="yes">
+        <statement>
+          <p>We have written new file contents in a block but did not update the block bitmap to mark the block as used.</p>
+        </statement>
+      </choice>
+      <choice correct="no">
+        <statement>
+          <p>We have not added the file we were trying to add or any information about it.</p>
+        </statement>
+      </choice>
+    </choices>
+  </exercise>
+  <exercise label="ex-fsck-simple-write-cases">
+    <statement>
+      <p>The book discusses a simple example of trying to write a new block to a file. It consisted of 3 updates that need to happen:
+        <ul>
+          <li>A: The data block <c>Db</c> contents are written</li>
+          <li>B: The inode is updated to include a pointer to the new block</li>
+          <li>C: The block bitmap is updated to mark the block as in use</li>
+        </ul>
+        If all three happen then we are OK. Also if none of them happen we are also OK from the point of view of consistency. Each of the other situations needs some thought, match them to the following end states.
+      </p>
+    </statement>
+    <cardsort>
+      <match>
+        <premise>Only A happens</premise>
+        <response>There is a block not referenced anywhere. No real harm done.</response>
+      </match>
+      <match>
+        <premise>Only B happens</premise>
+        <response>An inode pointer now points to garbage. When reading the file we will get back non-sense.</response>
+      </match>
+      <match>
+        <premise>Only C happens</premise>
+        <response>A block is marked as in use but is not actually used. We are leaking space.</response>
+      </match>
+      <match>
+        <premise>Only A and B happen</premise>
+        <response>The file appears fine for now. But the new block is not marked as in use and it might be overwritten with different data in the future.</response>
+      </match>
+      <match>
+        <premise>Only A and C happen</premise>
+        <response>Same problem as the case with only C.</response>
+      </match>
+      <match>
+        <premise>Only B and C happen</premise>
+        <response>Same problem as the case with only B.</response>
+      </match>
+    </cardsort>
+  </exercise>
+  <exercise label="ex-fsck-kinds-of-inconsistencies">
+    <statement>
+      <p>Match the following terms of inconsistent states to their definitions.</p>
+    </statement>
+    <cardsort>
+      <match>
+        <premise>A inode points to a data block but the bitmap says the block is available.</premise>
+        <response>file-system inconsistency</response>
+      </match>
+      <match>
+        <premise>The bitmap says a block is available but no inode references it.</premise>
+        <response>space leak</response>
+      </match>
+    </cardsort>
+  </exercise>
+  <p>Read section 42.4 about the FSCK solution to the crash consistency problem.</p>
+  <exercise label="ex-fsck-prevents-inconsistencies">
+    <statement correct="no">
+      <p>True or False: FSCK prevents crash inconsistencies from happening in the first place.</p>
+    </statement>
+    <feedback>
+      <p>No, FSCK aims to fix the inconsistency when the system reboots.</p>
+    </feedback>
+  </exercise>
+  <exercise label="ex-fsck-can-run-while-fs-in-use">
+    <statement correct="no">
+      <p>True or False: FSCK can do its work while the file system is actively in use.</p>
+    </statement>
+  </exercise>
+  <exercise label="ex-fsck-what-it-checks">
+    <statement>
+      <p>What kinds of checks does FSCK do?</p>
+    </statement>
+    <choices multiple-correct="no">
+      <choice correct="yes">
+        <statement>
+          <p>The size of the system as declared in the superblock is more than the number of reported blocks.</p>
+        </statement>
+      </choice>
+      <choice correct="yes">
+        <statement>
+          <p>If an inode points to a block, we make sure the block bitmap for that block is marked.</p>
+        </statement>
+      </choice>
+      <choice correct="yes">
+        <statement>
+          <p>If an inode is listed in directory contents, we make sure the inode bitmap for that inode is is marked.</p>
+        </statement>
+      </choice>
+      <choice correct="yes">
+        <statement>
+          <p>The link count of allocated inodes is verified to match the number of directories linking to them.</p>
+        </statement>
+      </choice>
+      <choice correct="yes">
+        <statement>
+          <p>Inodes that are not linked to by any directory are moved to a special directory.</p>
+        </statement>
+      </choice>
+      <choice correct="yes">
+        <statement>
+          <p>If two inodes refer to the same block.</p>
+        </statement>
+      </choice>
+      <choice correct="no">
+        <statement>
+          <p>If there are any typos in user-stored data, they are corrected.</p>
+        </statement>
+      </choice>
+      <choice correct="no">
+        <statement>
+          <p>If files are marked as having the wrong format (e.g. text vs image), this is rectified.</p>
+        </statement>
+      </choice>
+    </choices>
+  </exercise>
+  <exercise label="ex-fsck-drawbacks-of-fsck">
+    <statement>
+      <p>What are the main drawbacks of FSCK?</p>
+    </statement>
+    <choices multiple-correct="yes">
+      <choice correct="yes">
+        <statement>
+          <p>It is slow as it tries to check everything.</p>
+        </statement>
+      </choice>
+      <choice correct="no">
+        <statement>
+          <p>It may not find the problems.</p>
+        </statement>
+      </choice>
+      <choice correct="yes">
+        <statement>
+          <p>It can only run while the file system is inactive.</p>
+        </statement>
+      </choice>
+    </choices>
+  </exercise>
+  <p>Read section 42.3 about the journaling (write-ahead logging) approach to dealing with crash-inconsistencies.</p>
+  <exercise label="ex-fsck-journaling-slows-updates">
+    <statement correct="yes">
+      <p>True or False: Journaling makes updates slower.</p>
+    </statement>
+  </exercise>
+  <exercise label="ex-fsck-journaling-stages">
+    <statement>
+      <p>What are the two stages of a journaling setup?</p>
+    </statement>
+    <cardsort>
+      <match>
+        <premise>journal write</premise>
+        <response>We record in the journal the details of what we are about to write (but without the transaction-end block).</response>
+      </match>
+      <match>
+        <premise>journal commit</premise>
+        <response>We record end-of-transaction in the journal, to finalize a prepared transaction.</response>
+      </match>
+      <match>
+        <premise>checkpoint</premise>
+        <response>We change the actual file system areas based on the info in a journal transaction.</response>
+      </match>
+    </cardsort>
+  </exercise>
+  <exercise label="ex-fsck-journaling-checkpoint-crash">
+    <statement correct="yes">
+      <p>True or False: If a crash occurs halfway through the checkpoint process, we can recover by simply restarting the checkpoint process.</p>
+    </statement>
+  </exercise>
+  <exercise label="ex-fsck-journaling-disk-buffering">
+    <statement correct="yes">
+      <p>True or False: With disk write-buffering, requested writes may occur in an order different than the one intended, with a possible crash resulting in a case where a sequence of two writes A-B may result in only the second write happening.</p>
+    </statement>
+  </exercise>
+  <exercise label="ex-fsck-ordered-journaling">
+    <statement>
+      <p>What is <em>ordered journaling</em>?</p>
+    </statement>
+    <choices multiple-correct="no">
+      <choice correct="yes">
+        <statement>
+          <p>When we only record metadata information in the log, while the user data is written directly to disk.</p>
+        </statement>
+      </choice>
+      <choice correct="no">
+        <statement>
+          <p>When transactions in the log are written in order one after the other and not circling back.</p>
+        </statement>
+      </choice>
+      <choice correct="yes">
+        <statement>
+          <p>When we keep the log nice and tidy.</p>
+        </statement>
+      </choice>
+    </choices>
+  </exercise>
+  <p>Read section 42.4 about other approaches, and section 42.5 about a brief summary.</p>
+</section>
