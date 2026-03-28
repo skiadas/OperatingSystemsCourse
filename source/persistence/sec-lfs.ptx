@@ -1,0 +1,53 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<section xml:id="sec-lfs" xmlns:xi="http://www.w3.org/2001/XInclude">
+  <title>Log-structures file systems</title>
+  <p>We now look at a considerably different file system approach. Read the intro to  <url href="https://pages.cs.wisc.edu/~remzi/OSTEP/file-lfs.pdf">Log-structures File Systems</url> chapter 43 for an explanation of the motivation behind the system.</p>
+  <p>Read sections 43.1, 43.2 and 43.3 about the basic ideas behind a file system with only sequential writes and the technique of write-buffering.</p>
+  <exercise label="ex-lfs-write-buffering">
+    <statement correct="yes">
+      <p>True or False: <em>write buffering</em> is the process of pooling a number of file system updates in memory then writing them all at once.</p>
+    </statement>
+  </exercise>
+  <exercise label="ex-lfs-segments">
+    <statement>
+      <p>A <em>segment</em> is:</p>
+    </statement>
+    <choices multiple-correct="no">
+      <choice correct="yes">
+        <statement>
+          <p>The chunk of changes that are collectively written to the disk at once.</p>
+        </statement>
+      </choice>
+      <choice correct="no">
+        <statement>
+          <p>The small part of the changes that are to be written to the disk, that corresponds to a single change like a new file.</p>
+        </statement>
+      </choice>
+      <choice correct="no">
+        <statement>
+          <p>A particular range in memory where the changes to be written are kept.</p>
+        </statement>
+      </choice>
+    </choices>
+  </exercise>
+  <p>Read sections 43.4, 43.5, 43.6 about how inodes are managed in such a system.</p>
+  <exercise label="ex-lfs-inode-location">
+    <statement correct="no">
+      <p>True or False: The <em>inode</em> actual location on disk never has to change in a log-structured system. Inode number 5 is always found in the same place every time.</p>
+    </statement>
+  </exercise>
+  <exercise label="ex-lfs-imap">
+    <statement correct="yes">
+      <p>True or False: The <em>inode map</em> associates inode numbers to their most recent actual physical location on disk.</p>
+    </statement>
+  </exercise>
+  <p>Read sections 43.7, 43.8 about what is involved to perform a file read from the LFS system.</p>
+  <p>Read sections 43.9, 43.10, 43.11 about the problem of recovering out of date portions of the file system effectively and its solution.</p>
+  <exercise label="ex-lfs-garbage-collection">
+    <statement correct="yes">
+      <p>True or False: When recovering no-longer-usable parts, the LFS cleaner does so in whole segments, re-writing in a new segment any data that is still needed.</p>
+    </statement>
+  </exercise>
+  <p>Read section 43.12 about how crash recovery works in LFS, and section 43.13 for a brief summary.</p>
+</section>
