@@ -14,5 +14,6 @@
   <xi:include href="sec-vsfs.ptx" />
   <xi:include href="sec-fsck.ptx" />
   <xi:include href="sec-lfs.ptx" />
+  <xi:include href="sec-ssd.ptx" />
 
 </chapter>

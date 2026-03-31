@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<section xml:id="sec-ssd" xmlns:xi="http://www.w3.org/2001/XInclude">
+  <title>Solid State Drives</title>
+  <p>In this section we discuss  <url href="https://pages.cs.wisc.edu/~remzi/OSTEP/file-ssd.pdf">Solid State Drives</url> chapter 44. Start by reading sections 44.1, 44.2.</p>
+  <p>Key take-away: SSD space is organized in blocks that contain pages. In order to write to a page within a block we must first erase the whole block.</p>
+  <p>Read section 44.3. Key takeaways:
+    <ul>
+      <li>A <em>read</em> of a page happens fast, within microseconds, and from any location.</li>
+      <li>An <em>erase</em> operation clears an entire block to prepare for writes to that block. It is expensive, taking milliseconds.</li>
+      <li>A <em>program</em> operation writes to a page in a block that has been erased. Speed inbetween a read and an erase.</li>
+    </ul>
+    Thus pages can be in any of the following states: <c>INVALID</c> (its block not erased yet), <c>ERASED</c> (can be written to) and <c>VALID</c> (can be read from).
+  </p>
+  <p>Read section 44.4. Key takeaway: flash drives wear out: Each block can be erased and reprogrammed at most around 10,000 times (MLC) or 100,000 times (SLC).</p>
+  <p>Read section 44.5, about the basics of turning the flash chip mechanism to a fully usable SSD drive. In particular the use of a <em>flash translation layer</em> (FTL)</p>
+  <p>Read sections 44.6 and 44.7 about the basic mechanisms for organizing SSDs, in particular about the advantages of a log-structured approach.</p>
+  <p>Skim through sections 44.8-44.10.</p>
+  <p>Read section 44.11 about SSD performance and cost, in particular the considerably faster random operations on an SSD compared to a HDD.</p>
+  <p>Read the summary on page 44.12.</p>
+</section>
