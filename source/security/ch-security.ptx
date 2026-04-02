@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<chapter xml:id="ch-security" xmlns:xi="http://www.w3.org/2001/XInclude">
+  <title>Security</title>
+
+  <introduction>
+    <p>The general theme of this section is issues related to security in an operating system context.</p>
+  </introduction>
+
+  <!-- include sections -->
+  <xi:include href="sec-security-intro.ptx" />
+
+</chapter>

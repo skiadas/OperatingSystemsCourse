@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<section xml:id="sec-security-intro" xmlns:xi="http://www.w3.org/2001/XInclude">
+  <title>Security: Introduction</title>
+  <p>Start by reading the <url href="https://pages.cs.wisc.edu/~remzi/OSTEP/security-intro.pdf">Intro to Security</url> chapter, section 53.1. This section discusses why operating systems security matters.</p>
+  <p>Read section 53.2 about the kinds of protections that the OS should provide.</p>
+  <p>Read section 53.3 about the broad goals of a secure system, split into Confidentiality, Integrity and Availability.</p>
+  <p>Read section 53.4 about key general elements of securing a system.</p>
+  <p>Read section 53.5 about the basics of securing the OS, and the summary in 53.6.</p>
+</section>
