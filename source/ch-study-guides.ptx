@@ -202,4 +202,67 @@
       </ol>
     </p>
   </section>
+   <section xml:id="sec-exam-3">
+    <title>Exam 3</title>
+
+    <p>
+      General topics: Chapters 36, 37, 39, 40, 42, 43, 53, 54, 55.
+    </p>
+
+    <p>
+      <ol>
+        <li>
+          <p>Describe the basics of the <em>Canonical protocol</em> for a "canonical" I/O device, in particular describing the role of the <em>status</em>, <em>command</em> and <em>data</em> registers and the typical workflow for interacting with the device.
+          </p>
+        </li>
+        <li><p>Describe how the use of interrupts and DMA makes interaction with I/O devices more efficient.
+        </p></li>
+        <li><p>
+          Describe the basic geometry of a hard drive, and discuss in that context the three different times involved in any attempt to read or write (seek time, rotation time, transfer time). Be able to determine the total transfer time for a certain amount of data given the maximum seek time (and its relation to the average seek time), the drive's rotation speed and the transfer speed.
+        </p></li>
+        <li><p>
+          Discuss the main file interface: What are the key functions available, what are typical flags for the `open` method and what is their effect, what are file descriptors and what is their role?
+        </p></li>
+        <li><p>
+          Describe the overall logical setup for a filesystem: How do we represent files, what exactly are directories, how do we locate a file's contents given the path to the file?
+        </p></li>
+        <li><p>
+          Explain what hard links and symbolic links are, how they behave, and how they are stored at the file system.
+        </p></li>
+        <li><p>
+          Describe the regions of the very-simple-file-system, including the superblock, the bitmaps, the inode region and the data region. Describe the use of each region and how, for example, a particular file like a `README.md` would be stored and accessed.
+        </p></li>
+        <li><p>
+          Given a particular setup in the VSFS describe the series of reads and or writes that would be needed in order to perform any of the standard file operations (create new file, write to existing file, read from existing file, delete file, add hard link, create directory).
+        </p></li>
+        <li><p>
+          For various operations and a particular series of steps to implement them, be able to describe the consequences to the integrity of the file system as a result of a power loss in-between steps. What are the consequences, how severe are they? Would a file-system checker be able to detect the problem? Would it be able to restore the system to an appropriate state?
+        </p></li>
+        <li><p>
+          Describe the main mechanism involved in using journaling (write-ahead logging) to protect the filesystem from interruptions during a write process. What are the key steps involved? How do they ensure any power loss would be recoverable?
+        </p></li>
+        <li><p>
+          Discuss the distinction between data journaling and ordered/metadata journaling, and describe the basic workflow for metadata journaling.
+        </p></li>
+        <li><p>
+          Discuss the motivation behind the log-structured file-system and the what the key tradeoffs involved are.
+        </p></li>
+        <li><p>
+          Describe the main components of the log-structured file-system, (segments, inode maps, checkpoint regions). In particular describe what is written on each segment and how we can locate a specific inode's contents at any given time.
+        </p></li>
+        <li><p>
+          Security system goals are broadly classified as falling under Confidentiality, Integrity, and Availability. Describe what these mean in general, and describe concretely what protections an operating system is responsible of providing to a running process with regards to each category.
+        </p></li>
+        <li><p>
+          Describe a few of the general design principles for secure system and why they are important.
+        </p></li>
+        <li><p>
+          What are the three broad categories of mechanisms for authentication? What are some examples of each? What are the drawbacks/advantages?
+        </p></li>
+        <li><p>
+          In regards to access control the two main mechanisms are "Access Control Lists" and "Capabilities". Describe each mechanism and provide examples both in an operating system setting and in a real-world setting.
+        </p></li>
+      </ol>
+    </p>
+  </section>
 </chapter>
